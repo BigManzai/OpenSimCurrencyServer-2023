@@ -11,7 +11,8 @@ git clone git://opensimulator.org/git/opensim
 cd opensim
 git checkout dotnet6
 
-Copy Addon to Addon
+### Copy 
+addon-modules to addon-modules
 
 ### Build
 ./runprebuild.sh
