@@ -16,6 +16,7 @@ addon-modules to addon-modules
 
 ## Build
 ./runprebuild.sh
+
 dotnet build --configuration Release OpenSim.sln
 
      Build succeeded.
