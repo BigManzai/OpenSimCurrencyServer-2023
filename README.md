@@ -1,6 +1,20 @@
 # OpenSimCurrencyServer-2023
 OpenSim Currency Server  dotnet6 OpenSimulator 0.9.3.
 
+### Linux
+apt-get update && apt-get install -y apt-utils libgdiplus libc6-dev
+
+### Get source code OpenSimulator 0.9.3.
+git clone git://opensimulator.org/git/opensim
+cd opensim
+git checkout dotnet6
+
+Copy Addon to Addon
+
+### Build
+./runprebuild.sh
+dotnet build --configuration Release OpenSim.sln
+
      Build succeeded.
          0 Warning(s)
          0 Error(s)
