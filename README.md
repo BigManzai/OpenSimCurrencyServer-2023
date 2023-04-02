@@ -2,9 +2,9 @@
 OpenSim Currency Server  dotnet6 OpenSimulator 0.9.3.
 
 ### Linux
-apt-get update
+apt update
 
-apt-get install apt-utils libgdiplus libc6-dev
+apt install apt-utils libgdiplus libc6-dev
 
 ### Get source code OpenSimulator 0.9.3.
 git clone git://opensimulator.org/git/opensim
