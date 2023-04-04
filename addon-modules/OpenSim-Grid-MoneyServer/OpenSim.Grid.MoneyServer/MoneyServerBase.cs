@@ -84,7 +84,7 @@ namespace OpenSim.Grid.MoneyServer
 #pragma warning restore S1450 // Private fields only used as local variables in methods should become local variables
         private MoneyDBService m_moneyDBService;
 
-        private NSLCertificateVerify m_certVerify = new NSLCertificateVerify(); // Client Certificate
+        //private NSLCertificateVerify m_certVerify = new NSLCertificateVerify(); // Client Certificate
 
 #pragma warning disable S2933 // Fields that are only assigned in the constructor should be "readonly"
         private Dictionary<string, string> m_sessionDic = new Dictionary<string, string>();
@@ -153,7 +153,7 @@ namespace OpenSim.Grid.MoneyServer
                     m_httpServer.CertificateValidationCallback = null;
                     //
                     if (m_checkClientCert) {
-                        m_httpServer.CertificateValidationCallback = (RemoteCertificateValidationCallback)m_certVerify.ValidateClientCertificate;
+                        //m_httpServer.CertificateValidationCallback = (RemoteCertificateValidationCallback)m_certVerify.ValidateClientCertificate;
                         m_log.Info("[MONEY SERVER]: Set RemoteCertificateValidationCallback");
 
                         /*
@@ -198,7 +198,8 @@ namespace OpenSim.Grid.MoneyServer
 
             try {
                 // [Startup]
-                IConfig st_config = moneyConfig.m_config.Configs["Startup"];
+                IConfig config = moneyConfig.m_config.Configs["Startup"];
+                IConfig st_config = config;
                 string PIDFile = st_config.GetString("PIDFile", "");
                 if (PIDFile != "") Create_PIDFile(PIDFile);
 
@@ -241,7 +242,7 @@ namespace OpenSim.Grid.MoneyServer
                 m_clcrlFilename   = m_cert_config.GetString ("ClientCrlFilename", m_clcrlFilename);
                 //
                 if (m_checkClientCert && (m_cacertFilename != "")) {
-                    m_certVerify.SetPrivateCA(m_cacertFilename);
+                    //m_certVerify.SetPrivateCA(m_cacertFilename);
                     m_log.Info("[MONEY SERVER]: ReadIniConfig: Execute Authentication of Clients. CA   file is " + m_cacertFilename);
                 }
                 else {
@@ -250,7 +251,7 @@ namespace OpenSim.Grid.MoneyServer
 
                 if (m_checkClientCert) {
                     if (m_clcrlFilename != "") {
-                        m_certVerify.SetPrivateCRL(m_clcrlFilename);
+                        //m_certVerify.SetPrivateCRL(m_clcrlFilename);
                         m_log.Info("[MONEY SERVER]: ReadIniConfig: Execute Authentication of Clients. CRL  file is " + m_clcrlFilename);
                     }
                 }

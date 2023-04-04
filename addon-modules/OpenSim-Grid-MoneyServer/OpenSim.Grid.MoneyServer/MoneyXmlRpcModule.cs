@@ -83,7 +83,7 @@ namespace OpenSim.Grid.MoneyServer
         /// <summary>
         /// For server authentication
         /// </summary>
-        private NSLCertificateVerify m_certVerify = new NSLCertificateVerify();
+        //private NSLCertificateVerify m_certVerify = new NSLCertificateVerify();
 
         /// <summary>
         ///  Update Balance Messages
@@ -179,7 +179,7 @@ namespace OpenSim.Grid.MoneyServer
             m_certFilename = m_cert_config.GetString("ClientCertFilename", m_certFilename);
             m_certPassword = m_cert_config.GetString("ClientCertPassword", m_certPassword);
             if (m_certFilename != "") {
-                m_certVerify.SetPrivateCert(m_certFilename, m_certPassword);                
+                //m_certVerify.SetPrivateCert(m_certFilename, m_certPassword);                
                 //m_clientCert = new X509Certificate2(m_certFilename, m_certPassword);
                 //m_clientCert = new X509Certificate2(m_certFilename, m_certPassword, X509KeyStorageFlags.MachineKeySet);
                 m_log.Info("[MONEY XMLRPC]: Initialise: Issue Authentication of Client. Cert file is " + m_certFilename);
@@ -191,7 +191,7 @@ namespace OpenSim.Grid.MoneyServer
             m_cacertFilename  = m_cert_config.GetString ("CACertFilename",  m_cacertFilename);
 
             if (m_cacertFilename != "") {
-                m_certVerify.SetPrivateCA(m_cacertFilename);
+                //m_certVerify.SetPrivateCA(m_cacertFilename);
             }
             else {
                 m_checkServerCert = false;
@@ -1314,7 +1314,7 @@ namespace OpenSim.Grid.MoneyServer
             try {
                 NSLXmlRpcRequest moneyModuleReq = new NSLXmlRpcRequest(method, arrayParams);
                 //moneyServResp = moneyModuleReq.certSend(uri, m_clientCert, m_checkServerCert, MONEYMODULE_REQUEST_TIMEOUT);
-                moneyServResp = moneyModuleReq.certSend(uri, m_certVerify, m_checkServerCert, MONEYMODULE_REQUEST_TIMEOUT);
+                //moneyServResp = moneyModuleReq.certSend(uri, m_certVerify, m_checkServerCert, MONEYMODULE_REQUEST_TIMEOUT);
             }
             catch (Exception ex) {
                 m_log.ErrorFormat("[MONEY XMLRPC]: genericCurrencyXMLRPCRequest: Unable to connect to Region Server {0}", uri);
