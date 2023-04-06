@@ -13,8 +13,6 @@ cd opensim
 
 git checkout dotnet6
 
-Error (git checkout dotnet6 ohne dies wird korrekt gebaut) es werden keine Robust.exe, OpenSim.exe oder andere *.exe gebaut, ausnahme: nur die MoneyServer.exe wird gebaut.
-
 ## Copy 
 addon-modules to addon-modules
 
