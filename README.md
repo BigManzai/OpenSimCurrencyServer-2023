@@ -1,4 +1,6 @@
 # OpenSimCurrencyServer-2023
+Ohne Funktion - not works
+
 OpenSim Currency Server  dotnet6 OpenSimulator 0.9.3.
 
 ## Linux
