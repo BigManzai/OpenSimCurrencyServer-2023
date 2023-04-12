@@ -15,7 +15,6 @@ This is a test version and not intended for productive use.
 
 ## Linux
      apt update
-
      apt install apt-utils libgdiplus libc6-dev
 
 ## Get source code OpenSimulator 0.9.3.0
