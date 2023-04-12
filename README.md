@@ -1,5 +1,5 @@
 # OpenSimCurrencyServer-2023
-OpenSim Currency Server dotnet 6 OpenSimulator 0.9.3.
+OpenSim Currency Server for OpenSim 0.9.3.0 Nessie Dev (X64/Unix/DotNet6)
 
 opensim.currency - Revision 911
 
