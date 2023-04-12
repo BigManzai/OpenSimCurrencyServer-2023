@@ -18,13 +18,13 @@ apt update
 
 apt install apt-utils libgdiplus libc6-dev
 
-## Get source code OpenSimulator 0.9.3.
-git clone git://opensimulator.org/git/opensim
+## Get source code OpenSimulator 0.9.3.0
+git clone git://opensimulator.org/git/opensim opensim
 
 ## Copy
 cd opensim
 
-copy addon-modules to addon-modules
+copy OpenSimCurrencyServer addon-modules to opensim addon-modules
 
 ## checkout dotnet6
 git checkout dotnet6
