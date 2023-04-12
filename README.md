@@ -1,6 +1,10 @@
 # OpenSimCurrencyServer-2023
 OpenSim Currency Server  dotnet6 OpenSimulator 0.9.3.
 
+opensim.currency - Revision 911
+
+DTL/NSL Money Server for Linux/Unix
+
 Das ist eine Testversion und nicht für den Produktiven einsatz gedacht.
 
 ## Linux
