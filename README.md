@@ -29,6 +29,4 @@ git checkout dotnet6
 dotnet build --configuration Release OpenSim.sln
 
 # TODO:
-Leider muss beim DTL/NSL Money Server die ICertificatePolicy für dotnet6 komplett ausgetauscht werden.
-
-Bitte fehlende teile von der OpenSimCurrencyServer-2021 Version nutzen.
+Testing
