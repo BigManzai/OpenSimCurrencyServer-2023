@@ -15,13 +15,12 @@ apt install apt-utils libgdiplus libc6-dev
 ## Get source code OpenSimulator 0.9.3.
 git clone git://opensimulator.org/git/opensim
 
-## Copy 
-addon-modules to addon-modules
-
+## Copy
 cd opensim
 
-git checkout dotnet6
+addon-modules to addon-modules
 
+git checkout dotnet6
 
 ## Build
 ./runprebuild.sh
