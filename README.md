@@ -11,7 +11,7 @@ DTL/NSL Money Server for X64/Unix/DotNet by Fumi.Iseki and NSL http://www.nsl.tu
     Test Grid: http://openmanniland.de:8002/
     Viewer link: secondlife://http|!!openmanniland.de|8002+Welcome
 
-Das ist eine Testversion und nicht für den Produktiven einsatz gedacht.
+This is a test version and not intended for productive use.
 
 ## Linux
 apt update
