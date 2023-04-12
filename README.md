@@ -20,6 +20,7 @@ cd opensim
 
 addon-modules to addon-modules
 
+## checkout dotnet6
 git checkout dotnet6
 
 ## Build
