@@ -14,12 +14,12 @@ DTL/NSL Money Server for X64/Unix/DotNet by Fumi.Iseki and NSL http://www.nsl.tu
 This is a test version and not intended for productive use.
 
 ## Linux
-apt update
+     apt update
 
      apt install apt-utils libgdiplus libc6-dev
 
 ## Get source code OpenSimulator 0.9.3.0
-git clone git://opensimulator.org/git/opensim opensim
+     git clone git://opensimulator.org/git/opensim opensim
 
 ## Copy
      cd opensim
