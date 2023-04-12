@@ -25,6 +25,7 @@ git clone git://opensimulator.org/git/opensim opensim
 cd opensim
 
 copy OpenSimCurrencyServer addon-modules to opensim addon-modules
+copy OpenSimCurrencyServer bin to opensim bin
 
 ## checkout dotnet6
 git checkout dotnet6
