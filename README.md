@@ -1,7 +1,7 @@
 # OpenSimCurrencyServer-2023
 OpenSim Currency Server for OpenSim 0.9.3.0 Nessie Dev (X64/Unix/DotNet6)
 
-opensim.currency - Revision 911
+opensim.currency - Revision 911 modified
 
 DTL/NSL Money Server for X64/Unix/DotNet by Fumi.Iseki and NSL http://www.nsl.tuis.ac.jp , here is a test revision.
 
