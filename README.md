@@ -24,8 +24,8 @@ This is a test version and not intended for productive use.
 ## Copy
      cd opensim
 
-     copy OpenSimCurrencyServer addon-modules to opensim addon-modules
-     copy OpenSimCurrencyServer bin to opensim bin
+     copy OpenSimCurrencyServer/addon-modules to opensim/addon-modules
+     copy OpenSimCurrencyServer/bin to opensim/bin
 
 ## checkout dotnet6
      git checkout dotnet6
