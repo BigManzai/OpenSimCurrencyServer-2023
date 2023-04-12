@@ -24,7 +24,7 @@ git clone git://opensimulator.org/git/opensim
 ## Copy
 cd opensim
 
-addon-modules to addon-modules
+copy addon-modules to addon-modules
 
 ## checkout dotnet6
 git checkout dotnet6
