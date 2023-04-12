@@ -14,7 +14,6 @@
       </Configuration>
 	  
       <ReferencePath>../../bin/</ReferencePath>
-      <Reference name="System.Runtime.Remoting"/>	  
       <Reference name="Nini" path="../../bin/"/>
       <Reference name="Mono.Addins" path="../../bin/"/>
       <Reference name="log4net" path="../../bin/"/>
@@ -33,6 +32,7 @@
 	  
       <Files>
         <Match pattern="*.cs" recurse="true">
+          <Exclude name="obj" pattern="obj"/>
           <Exclude name="Tests" pattern="Tests"/>
         </Match>
       </Files>
