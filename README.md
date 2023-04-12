@@ -1,5 +1,5 @@
 # OpenSimCurrencyServer-2023
-OpenSim Currency Server  dotnet6 OpenSimulator 0.9.3.
+OpenSim Currency Server dotnet 6 OpenSimulator 0.9.3.
 
 opensim.currency - Revision 911
 
@@ -33,6 +33,8 @@ git checkout dotnet6
 ./runprebuild.sh
 
 dotnet build --configuration Release OpenSim.sln
+
+Thank you for the great work and help from Pius Noel and everyone else who helped out.
 
 # TODO:
 Testing
