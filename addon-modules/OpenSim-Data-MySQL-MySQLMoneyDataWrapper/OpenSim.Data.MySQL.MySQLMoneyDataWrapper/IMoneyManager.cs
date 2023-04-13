@@ -34,10 +34,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
     {
         int getBalance(string userID);
 
-        //int getBalanceStatus(string userID);
-
-        //bool updateBalanceStatus(string userID,int status);
-
         bool withdrawMoney(UUID transactionID,string senderID, int amount);
 
         bool giveMoney(UUID transactionID,string receiverID, int amount);

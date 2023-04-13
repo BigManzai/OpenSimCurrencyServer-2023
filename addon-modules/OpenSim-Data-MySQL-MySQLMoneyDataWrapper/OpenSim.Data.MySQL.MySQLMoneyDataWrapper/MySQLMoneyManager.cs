@@ -77,7 +77,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
                 catch (Exception e) {
                     throw new Exception("[MONEY MANAGER]: Connection error while using connection string ["+connectString+"]", e);
                 }
-                //m_log.Info("[MONEY MANAGER]: Connection established");
+
             }
 
             catch(Exception e) {
@@ -282,7 +282,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
 
 
 
-        ///////////////////////////////////////////////////////////////////////
+
         // create Tables
 
         private void CreateBalancesTable()
@@ -296,7 +296,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             sql += "`type`   tinyint(2)  NOT NULL DEFAULT 0,";
             sql += "PRIMARY KEY(`user`))";
             sql += "Engine=InnoDB DEFAULT CHARSET=utf8 ";
-            ///////////////////////////////////////////////
+
             sql += "COMMENT='Rev.4';";
             MySqlCommand cmd = new MySqlCommand(sql, dbcon);
             cmd.ExecuteNonQuery();
@@ -318,7 +318,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             sql += "`serverurl` varchar(255) NOT NULL DEFAULT '',";
             sql += "PRIMARY KEY(`user`))";
             sql += "Engine=InnoDB DEFAULT CHARSET=utf8 ";
-            ///////////////////////////////////////////////
+
             sql += "COMMENT='Rev.3';";
             MySqlCommand cmd = new MySqlCommand(sql, dbcon);
             cmd.ExecuteNonQuery();
@@ -349,7 +349,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             sql += "`description` varchar(255) DEFAULT NULL,";
             sql += "PRIMARY KEY(`UUID`))";
             sql += "Engine=InnoDB DEFAULT CHARSET=utf8 ";
-            ///////////////////////////////////////////////
+
             sql += "COMMENT='Rev.12';";
             MySqlCommand cmd = new MySqlCommand(sql, dbcon);
             cmd.ExecuteNonQuery();
@@ -371,7 +371,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             sql += "`time` int(11) NOT NULL,";
             sql += "PRIMARY KEY(`UUID`))";
             sql += "Engine=InnoDB DEFAULT CHARSET=utf8 ";
-            ///////////////////////////////////////////////
+
             sql += "COMMENT='Rev.3';";
             MySqlCommand cmd = new MySqlCommand(sql, dbcon);
             cmd.ExecuteNonQuery();
@@ -381,8 +381,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
-
-        ///////////////////////////////////////////////////////////////////////
         // update Balances Table
 
         private void UpdateBalancesTable1()
@@ -440,7 +438,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
                     }
                 }
 
-                //
+
                 sql  = "BEGIN;";
                 sql += "ALTER TABLE `" + Table_of_Balances + "` ";
                 sql += "COMMENT = 'Rev.2';";
@@ -482,8 +480,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
-
-        ///////////////////////////////////////////////////////////////////////
         // update User Info Table
 
         private void UpdateUserInfoTable1()
@@ -552,7 +548,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             }
         }
 
-
         private void UpdateUserInfoTable2()
         {
             string sql = string.Empty;
@@ -572,7 +567,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
-        ///////////////////////////////////////////////////////////////////////
         // update Transactions Table
 
         /// <summary>
@@ -652,7 +646,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         /// </summary>
         private void UpdateTransactionsTable6()
         {
-            //m_log.Info("[MONEY MANAGER]: Converting Transaction Table...");
             string sql = string.Empty;
 
             sql = "SELECT COUNT(*) FROM " + Table_of_Transactions;
@@ -759,7 +752,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         /// </summary>
         private void UpdateTransactionsTable10()
         {
-            //m_log.Info("[MONEY MANAGER]: Converting Transaction Table...");
             string sql = string.Empty;
 
             sql = "SELECT COUNT(*) FROM `" + Table_of_Transactions + "` WHERE type=1000";
@@ -790,7 +782,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
                 }
             }
 
-            //
             sql  = "BEGIN;";
             sql += "ALTER TABLE `" + Table_of_Transactions + "` ";
             sql += "COMMENT = 'Rev.11';";
@@ -819,7 +810,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
-        ///////////////////////////////////////////////////////////////////////
         // update Total Sales Table
 
         private void UpdateTotalSalesTable1()
@@ -839,7 +829,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             initTotalSalesTable();
         }
 
-
         private void UpdateTotalSalesTable2()
         {
             string sql = string.Empty;
@@ -855,10 +844,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
-        ///////////////////////////////////////////////////////////////////////
-
-        ///////////////////////////////////////////////////////////////////////
-        //
 
         private Dictionary<string,string> CheckTables()
         {
@@ -911,8 +896,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
-
-        ///////////////////////////////////////////////////////////////////////
         //
         // balances
         //
@@ -1096,8 +1079,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
-
-        ///////////////////////////////////////////////////////////////////////
         //
         // totalsales
         //
@@ -1151,7 +1132,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
 
         private void deleteTotalSalesTable()
         {
-            //m_log.Info("[MONEY MANAGER]: Deleting TotalSales Table...");
             string sql = string.Empty;
 
             sql = "DELETE FROM "+ Table_of_TotalSales;
@@ -1171,10 +1151,10 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             string sql = string.Empty;
             UUID uuid = UUID.Random();
 
-            // オブジェクトを伴う取引のみ記録
-//          if (objectUUID==UUID.Zero.ToString()) return bRet;  
+            // Record only transactions involving objects
+            // if (objectUUID==UUID.Zero.ToString()) return bRet;  
 
-            sql  = "INSERT INTO " + Table_of_TotalSales;
+            sql = "INSERT INTO " + Table_of_TotalSales;
             sql += " (`UUID`,`user`,`objectUUID`,`type`,`TotalCount`,`TotalAmount`,`time`) VALUES";
             sql += " (?ID,?userID,?objID,?type,?count,?amount,?time)";
 
@@ -1215,7 +1195,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             return bRet;
 
         }
-
 
         public bool setTotalSale(string userUUID, string objectUUID, int type, int count, int amount, int tmstamp)
         {
@@ -1263,8 +1242,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
-
-        ///////////////////////////////////////////////////////////////////////
         //
         // transactions
         //
@@ -1520,15 +1497,11 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
-
-        ///////////////////////////////////////////////////////////////////////
         //
         // userinfo
         //
         public bool addUserInfo(UserInfo userInfo)
         {
-            //m_log.Error("[MONEY MANAGER]: Adding UserInfo: " + userInfo.UserID);
-
             bool bRet = false;
             string sql = string.Empty;
            
@@ -1563,8 +1536,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
 
         public UserInfo fetchUserInfo(string userID)
         {
-            //m_log.Error("[MONEY MANAGER]: Fetching UserInfo: " + userID);
-
             UserInfo userInfo = new UserInfo();
             userInfo.UserID = null;
             string sql = string.Empty;
@@ -1602,8 +1573,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
 
         public bool updateUserInfo(UserInfo userInfo)
         {
-            //m_log.Error("[MONEY MANAGER]: Updating UserInfo: " + userInfo.UserID);
-
             bool bRet = false;
             string sql = string.Empty;
 

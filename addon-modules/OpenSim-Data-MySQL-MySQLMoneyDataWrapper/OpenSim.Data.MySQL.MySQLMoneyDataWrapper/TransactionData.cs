@@ -42,24 +42,12 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         int m_time;
         int m_status;
         string m_objectID     = UUID.Zero.ToString();
-//      string m_objectID     = "00000000-0000-0000-0000-000000000000";
         string m_objectName   = string.Empty;
         string m_regionHandle = string.Empty;
         string m_regionUUID   = string.Empty;
         string m_secureCode   = string.Empty;
         string m_commonName   = string.Empty;
         string m_description  = string.Empty;
-
-/*
-        public TransactionData(string uuid, string sender, string receiver,
-            int amount, int time, int status, string description)
-        {
-            this.m_uuid = uuid;
-            this.m_sender = sender;
-            this.m_receiver = receiver;
-            this.m_amount = amount;
-        }
-*/
 
         public UUID TransUUID
         {
@@ -157,7 +145,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             set { m_commonName = value; }
         }
     }
-
 
     public enum Status
     { 
