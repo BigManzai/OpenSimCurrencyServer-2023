@@ -3,7 +3,8 @@ OpenSim Currency Server for OpenSim 0.9.3.0 Nessie Dev (X64/Unix/DotNet6)
 
 opensim.currency - Revision 911 modified
 
-DTL/NSL Money Server for X64/Unix/DotNet and Windows 10 64bit with XAMPP/MariaDB by Fumi.Iseki and NSL http://www.nsl.tuis.ac.jp , here is a test revision.
+DTL/NSL Money Server for X64/Unix/DotNet and Windows 10 64bit with XAMPP/MariaDB 
+by Fumi.Iseki and NSL http://www.nsl.tuis.ac.jp , here is a test revision.
 
     This is currently being tested with:
     opensim-0.9.3.x Dev - target vs2022 mono 6.xx.x
