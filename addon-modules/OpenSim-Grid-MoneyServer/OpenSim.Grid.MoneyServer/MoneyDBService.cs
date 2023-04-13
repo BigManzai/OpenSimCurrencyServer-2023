@@ -41,7 +41,6 @@ namespace OpenSim.Grid.MoneyServer
     {
         private static readonly ILog m_log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private string m_connect;
-		//private MySQLMoneyManager m_moneyManager;
 		private long TicksToEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks;
 
         // DB manager pool
@@ -68,9 +67,6 @@ namespace OpenSim.Grid.MoneyServer
             m_connect = connectionString;
             m_maxConnections = maxDBConnections;
             if (connectionString != string.Empty) {
-                //m_moneyManager = new MySQLMoneyManager(connectionString);
-
-                //m_log.Info("Creating " + m_maxConnections + " DB connections...");
                 for (int i=0; i<m_maxConnections; i++) {
                     //m_log.Info("Connecting to DB... [" + i + "]");
                     MySQLSuperManager msm = new MySQLSuperManager();
@@ -214,7 +210,6 @@ namespace OpenSim.Grid.MoneyServer
             }
         }
 
-
         public bool addTransaction(TransactionData transaction)
         {
             MySQLSuperManager dbm = GetLockedConnection();
@@ -236,7 +231,6 @@ namespace OpenSim.Grid.MoneyServer
                 dbm.Release();
             }
         }
-
 
         public bool addUser(string userID, int balance, int status, int type)
         {
@@ -328,7 +322,6 @@ namespace OpenSim.Grid.MoneyServer
                 dbm.Release();
             }
         }
-
 
         public bool ValidateTransfer(string secureCode, UUID transactionID)
         {
@@ -498,12 +491,7 @@ namespace OpenSim.Grid.MoneyServer
             return false;
         }
 
-
-		///////////////////////////////////////////////////////////////////////////////////////////////////////
-		//
 		// userinfo
-		//
-		
         public bool TryAddUserInfo(UserInfo user)
         {
             MySQLSuperManager dbm = GetLockedConnection();
@@ -546,7 +534,6 @@ namespace OpenSim.Grid.MoneyServer
             }
         }
 
-
         public UserInfo FetchUserInfo(string userID)
         {
             UserInfo userInfo = null;
@@ -571,7 +558,6 @@ namespace OpenSim.Grid.MoneyServer
                 dbm.Release();
             }
         }
-
 
         public int getTransactionNum(string userID, int startTime, int endTime)
         {

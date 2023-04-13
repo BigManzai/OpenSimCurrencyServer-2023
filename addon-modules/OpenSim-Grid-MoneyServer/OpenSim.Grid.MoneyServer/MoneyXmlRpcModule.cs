@@ -76,7 +76,6 @@ namespace OpenSim.Grid.MoneyServer
 
         private string m_certFilename       = "";
         private string m_certPassword       = "";
-        //private X509Certificate2 m_clientCert = null;
 
         private string m_sslCommonName      = "";
 
@@ -127,7 +126,6 @@ namespace OpenSim.Grid.MoneyServer
         public MoneyXmlRpcModule()
         {
         }
-
 
         public void Initialise(string opensimVersion, IMoneyDBService moneyDBService, IMoneyServiceCore moneyCore) 
         {
@@ -180,13 +178,11 @@ namespace OpenSim.Grid.MoneyServer
             m_certPassword = m_cert_config.GetString("ClientCertPassword", m_certPassword);
             if (m_certFilename != "") {
                 m_certVerify.SetPrivateCert(m_certFilename, m_certPassword);                
-                //m_clientCert = new X509Certificate2(m_certFilename, m_certPassword);
-                //m_clientCert = new X509Certificate2(m_certFilename, m_certPassword, X509KeyStorageFlags.MachineKeySet);
                 m_log.Info("[MONEY XMLRPC]: Initialise: Issue Authentication of Client. Cert file is " + m_certFilename);
             }
 
             // Server Authentication
-            // CA : MoneyServer が XMLRPC のWebサーバのサーバ証明書をチェックするための設定
+            // CA : MoneyServer config for checking the server certificate of the web server for XMLRPC
             m_checkServerCert = m_cert_config.GetBoolean("CheckServerCert", m_checkServerCert);
             m_cacertFilename  = m_cert_config.GetString ("CACertFilename",  m_cacertFilename);
 
@@ -203,10 +199,6 @@ namespace OpenSim.Grid.MoneyServer
             else {
                 m_log.Info("[MONEY XMLRPC]: Initialise: No check XMLRPC Server or CACertFilename is empty. CheckServerCert is false.");
             }
-
-            //ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(m_certVerify.ValidateServerCertificate);
-            //ServicePointManager.UseNagleAlgorithm = false;
-            //ServicePointManager.Expect100Continue = false;
 
             m_sessionDic = m_moneyCore.GetSessionDic();
             m_secureSessionDic = m_moneyCore.GetSecureSessionDic();
@@ -281,7 +273,6 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
-        //
         public string GetSSLCommonName(XmlRpcRequest request)
         {
             if (request.Params.Count>5) {
@@ -298,7 +289,6 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
-        //
         public string GetSSLCommonName()
         {
             return m_sslCommonName;
@@ -358,12 +348,11 @@ namespace OpenSim.Grid.MoneyServer
             if (requestData.ContainsKey("avatarType"))            avatarType  = Convert.ToInt32(requestData["avatarType"]);
             if (requestData.ContainsKey("avatarClass"))           avatarClass = Convert.ToInt32(requestData["avatarClass"]);
 
-            //
             string firstName = string.Empty;
             string lastName  = string.Empty;
             string serverURL = string.Empty;
             string securePsw = string.Empty;
-            //
+
             if (!String.IsNullOrEmpty(universalID)) {
                 UUID uuid;
                 Util.ParseUniversalUserIdentifier(universalID, out uuid, out serverURL, out firstName, out lastName, out securePsw);
@@ -380,20 +369,13 @@ namespace OpenSim.Grid.MoneyServer
                 if (avatarClass==(int)AvatarType.UNKNOWN_AVATAR) avatarClass = userInfo.Class;
                 if (String.IsNullOrEmpty(userName)) userName = userInfo.Avatar;
             }
-            //
+
             if (avatarType==(int)AvatarType.UNKNOWN_AVATAR) avatarType = avatarClass;
             if (String.IsNullOrEmpty(serverURL)) avatarClass = (int)AvatarType.NPC_AVATAR;
 
             m_log.InfoFormat("[MONEY XMLRPC]: handleClientLogon: Avatar {0} ({1}) is logged on.", userName, clientUUID);
             m_log.InfoFormat("[MONEY XMLRPC]: handleClientLogon: Avatar Type is {0} and Avatar Class is {1}", avatarType, avatarClass);
 
-            //if (String.IsNullOrEmpty(serverURL)) {
-            //  responseData["description"] = "Server URL is empty. Avatar is a NPC?";
-            //  m_log.InfoFormat("[MONEY XMLRPC]: handleClientLogon: {0}", responseData["description"]);
-            //  return response;
-            //}
-
-            //
             // Check Avatar
             if (avatarClass==(int)AvatarType.GUEST_AVATAR && !m_gst_enable) {
                 responseData["description"] = "Avatar is a Guest avatar. But this Money Server does not support Guest avatars.";
@@ -424,7 +406,6 @@ namespace OpenSim.Grid.MoneyServer
                 return response;
             }
 
-            //
             //Update the session and secure session dictionary
             lock (m_sessionDic) {
                 if (!m_sessionDic.ContainsKey(clientUUID)) {
@@ -439,7 +420,6 @@ namespace OpenSim.Grid.MoneyServer
                 else m_secureSessionDic[clientUUID] = secureID;
             }
 
-            //
             try {
                 if (userInfo==null) userInfo = new UserInfo();
                 userInfo.UserID    = clientUUID;
@@ -464,7 +444,6 @@ namespace OpenSim.Grid.MoneyServer
                 return response;
             }
 
-            //
             try {
                 balance = m_moneyDBService.getBalance(clientUUID);
 
@@ -500,12 +479,8 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
-
-        //
         public XmlRpcResponse handleClientLogout(XmlRpcRequest request, IPEndPoint remoteClient)
         {
-            //m_log.InfoFormat("[MONEY XMLRPC]: handleClientLogout:");
-
             GetSSLCommonName(request);
 
             Hashtable requestData = (Hashtable)request.Params[0];
@@ -541,9 +516,6 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //
         /// <summary>
         /// handle incoming transaction
         /// </summary>
@@ -677,8 +649,6 @@ namespace OpenSim.Grid.MoneyServer
         /// <returns></returns>
         public XmlRpcResponse handleForceTransaction(XmlRpcRequest request, IPEndPoint remoteClient)
         {
-            //m_log.InfoFormat("[MONEY XMLRPC]: handleForceTransaction:");
-
             GetSSLCommonName(request);
 
             Hashtable requestData = (Hashtable)request.Params[0];
@@ -928,8 +898,6 @@ namespace OpenSim.Grid.MoneyServer
         /// <returns></returns>
         public XmlRpcResponse handleAddBankerMoney(XmlRpcRequest request, IPEndPoint remoteClient)
         {
-            //m_log.InfoFormat("[MONEY XMLRPC]: handleAddBankerMoney:");
-
             GetSSLCommonName(request);
 
             Hashtable requestData   = (Hashtable)request.Params[0];
@@ -1123,10 +1091,6 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         //
         //  added by Fumi.Iseki
         //
@@ -1313,7 +1277,6 @@ namespace OpenSim.Grid.MoneyServer
             XmlRpcResponse moneyServResp = null;
             try {
                 NSLXmlRpcRequest moneyModuleReq = new NSLXmlRpcRequest(method, arrayParams);
-                //moneyServResp = moneyModuleReq.certSend(uri, m_clientCert, m_checkServerCert, MONEYMODULE_REQUEST_TIMEOUT);
                 moneyServResp = moneyModuleReq.certSend(uri, m_certVerify, m_checkServerCert, MONEYMODULE_REQUEST_TIMEOUT);
             }
             catch (Exception ex) {
@@ -1346,8 +1309,6 @@ namespace OpenSim.Grid.MoneyServer
         /// <param name="userID"></param>
         private void UpdateBalance(string userID, string message)
         {
-            //m_log.InfoFormat("[MONEY XMLRPC]: UpdateBalance: ID = {0}, Message = {1}", userID, message);
-
             string sessionID  = string.Empty;
             string secureID   = string.Empty;
 
@@ -1378,8 +1339,6 @@ namespace OpenSim.Grid.MoneyServer
         /// <returns></returns>
         protected bool RollBackTransaction(TransactionData transaction)
         {
-            //m_log.InfoFormat("[MONEY XMLRPC]: RollBackTransaction:");
-
             if(m_moneyDBService.withdrawMoney(transaction.TransUUID, transaction.Receiver, transaction.Amount)) {
                 if(m_moneyDBService.giveMoney(transaction.TransUUID, transaction.Sender, transaction.Amount)) {
                     m_log.InfoFormat("[MONEY XMLRPC]: RollBackTransaction: Transaction {0} is successfully.", transaction.TransUUID.ToString());
@@ -1404,11 +1363,8 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
-        //
         public XmlRpcResponse handleCancelTransfer(XmlRpcRequest request, IPEndPoint remoteClient)
         {
-            //m_log.InfoFormat("[MONEY XMLRPC]: handleCancelTransfer:");
-
             GetSSLCommonName(request);
 
             Hashtable requestData = (Hashtable)request.Params[0];
@@ -1452,11 +1408,8 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
-        //
         public XmlRpcResponse handleGetTransaction(XmlRpcRequest request, IPEndPoint remoteClient)
         {
-            //m_log.InfoFormat("[MONEY XMLRPC]: handleGetTransaction:");
-
             GetSSLCommonName(request);
 
             Hashtable requestData   = (Hashtable)request.Params[0];
@@ -1520,17 +1473,12 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //
         // In development
         //
 
         public XmlRpcResponse handleWebLogin(XmlRpcRequest request, IPEndPoint remoteClient)
         {
-            //m_log.InfoFormat("[MONEY XMLRPC]: handleWebLogin: Start.");
-
             GetSSLCommonName(request);
 
             Hashtable requestData   = (Hashtable)request.Params[0];
@@ -1568,8 +1516,6 @@ namespace OpenSim.Grid.MoneyServer
         //
         public XmlRpcResponse handleWebLogout(XmlRpcRequest request, IPEndPoint remoteClient)
         {
-            //m_log.InfoFormat("[MONEY XMLRPC]: handleWebLogout:");
-
             GetSSLCommonName(request);
 
             Hashtable requestData   = (Hashtable)request.Params[0];
@@ -1610,8 +1556,6 @@ namespace OpenSim.Grid.MoneyServer
         /// <returns></returns>
         public XmlRpcResponse handleWebGetBalance(XmlRpcRequest request, IPEndPoint remoteClient)
         {
-            //m_log.InfoFormat("[MONEY XMLRPC]: handleWebGetBalance:");
-
             GetSSLCommonName(request);
 
             Hashtable requestData = (Hashtable)request.Params[0];
@@ -1675,8 +1619,6 @@ namespace OpenSim.Grid.MoneyServer
         /// <returns></returns>
         public XmlRpcResponse handleWebGetTransaction(XmlRpcRequest request, IPEndPoint remoteClient)
         {
-            //m_log.InfoFormat("[MONEY XMLRPC]: handleWebGetTransaction:");
-
             GetSSLCommonName(request);
 
             Hashtable requestData = (Hashtable)request.Params[0];
@@ -1760,8 +1702,6 @@ namespace OpenSim.Grid.MoneyServer
         /// <returns></returns>
         public XmlRpcResponse handleWebGetTransactionNum(XmlRpcRequest request, IPEndPoint remoteClient)
         {
-            //m_log.InfoFormat("[MONEY XMLRPC]: handleWebGetTransactionNum:");
-
             GetSSLCommonName(request);
 
             Hashtable requestData   = (Hashtable)request.Params[0];
