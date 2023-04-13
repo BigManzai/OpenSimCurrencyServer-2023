@@ -14,7 +14,7 @@
       </Configuration>
 
       <ReferencePath>../../bin/</ReferencePath>
-      <Reference name="Mono.Security.dll" path="../../bin/lib/NET/"/>
+      <Reference name="Mono.Security.dll" path="../../bin/"/>
       <Reference name="Nini" path="../../bin/"/>      
       <Reference name="log4net" path="../../bin/"/>
       <Reference name="XMLRPC" path="../../bin/"/>
