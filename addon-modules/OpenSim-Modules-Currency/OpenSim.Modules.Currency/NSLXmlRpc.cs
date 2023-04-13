@@ -69,12 +69,11 @@ namespace NSL.Network.XmlRpc
             else {
                 checkServerCert = false;
             }
-            //
+
             if (!checkServerCert) {
                 request.Headers.Add("NoVerifyCert", "true");   // Do not verify the certificate of the other party  // 相手の証明書を検証しない
             }
 
-            //
             Stream stream = null;
             try { 
                 stream = request.GetRequestStream();
@@ -87,7 +86,6 @@ namespace NSL.Network.XmlRpc
             }
             if (stream==null) return null;
 
-            //
             XmlTextWriter xml = new XmlTextWriter(stream, _encoding);
             _serializer.Serialize(xml, this);
             xml.Flush();

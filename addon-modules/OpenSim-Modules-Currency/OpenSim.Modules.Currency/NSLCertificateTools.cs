@@ -112,8 +112,6 @@ namespace NSL.Certificate.Tools
             }
         }
 
-
-        //
         public void SetPrivateCRL(string crlfile)
         {
             try {
@@ -150,14 +148,6 @@ namespace NSL.Certificate.Tools
         }
 
 
-        /*
-        SslPolicyErrors:
-            RemoteCertificateNotAvailable = 1, // 証明書が利用できません．
-            RemoteCertificateNameMismatch = 2, // 証明書名が不一致です．
-            RemoteCertificateChainErrors  = 4, // ChainStatus が空でない配列を返しました．
-        */
-
-
         /// <summary>
         /// Validate Server Certificate Callback Function
         /// </summary>
@@ -183,15 +173,7 @@ namespace NSL.Certificate.Tools
             string commonname = certificate2.GetNameInfo(X509NameType.SimpleName, false);
             m_log.InfoFormat("[NSL SERVER CERT VERIFY]: ValidateServerCertificate: Common Name is \"{0}\"", commonname);
 
-            /*
-            // RemoteCertificateNotAvailableはエラーとする．
-            if ((sslPolicyErrors & SslPolicyErrors.RemoteCertificateNotAvailable)==SslPolicyErrors.RemoteCertificateNotAvailable) {
-                m_log.InfoFormat("[NSL SERVER CERT VERIFY]: ValidateServerCertificate: Policy Error! {0}", sslPolicyErrors);
-                return false;
-            }
-            */
-
-            // None, ChainErrors Error except for． // None, ChainErrors 以外は全てエラーとする．
+            // None, ChainErrors Error except for．
             if ((sslPolicyErrors != SslPolicyErrors.None) && (sslPolicyErrors != SslPolicyErrors.RemoteCertificateChainErrors)) {
                 m_log.InfoFormat("[NSL SERVER CERT VERIFY]: ValidateServerCertificate: Policy Error! {0}", sslPolicyErrors);
                 return false;
@@ -229,7 +211,7 @@ namespace NSL.Certificate.Tools
             string commonname = certificate2.GetNameInfo(X509NameType.SimpleName, false);
             m_log.InfoFormat("[NSL CLIENT CERT VERIFY]: ValidateClientCertificate: Common Name is \"{0}\"", commonname);
 
-            // None, ChainErrors 以外は全てエラーとする．
+            // None, ChainErrors Anything other than that is an error.
             if (sslPolicyErrors!=SslPolicyErrors.None && sslPolicyErrors!=SslPolicyErrors.RemoteCertificateChainErrors) {
                 m_log.InfoFormat("[NSL CLIENT CERT VERIFY]: ValidateClientCertificate: Policy Error! {0}", sslPolicyErrors);
                 return false;
@@ -256,33 +238,4 @@ namespace NSL.Certificate.Tools
         }
     }
 
-
-    /// <summary>
-    /// class NSL Certificate Policy
-    /// </summary>
-    /*
-    public class NSLCertificatePolicy : ICertificatePolicy
-    {
-        /// <summary>
-        /// Check Validation Result
-        /// </summary>
-        /// <param name="srvPoint"></param>
-        /// <param name="certificate"></param>
-        /// <param name="request"></param>
-        /// <param name="certificateProblem"></param>
-        /// <returns></returns>
-        public bool CheckValidationResult(ServicePoint srvPoint, X509Certificate certificate, WebRequest request, int certificateProblem)
-        {
-            if (certificateProblem == 0 ||              // normal           // 正常
-                certificateProblem == -2146762487 ||    // Not trusted      // 信頼されてない
-                certificateProblem == -2146762495 ||    // Expired          // 期限切れ
-                certificateProblem == -2146762481) {    // Incorrect name   // 名前不正
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-    }
-    */
 }
