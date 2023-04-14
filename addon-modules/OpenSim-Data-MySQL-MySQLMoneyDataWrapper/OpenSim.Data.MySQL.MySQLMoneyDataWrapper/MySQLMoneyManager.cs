@@ -24,7 +24,6 @@ using log4net;
 using MySql.Data.MySqlClient;
 using OpenMetaverse;
 
-
 namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
 {
     public class MySQLMoneyManager:IMoneyManager
@@ -40,8 +39,15 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
 
         private string connectString;
         private MySqlConnection dbcon;
-  
 
+
+        /// <summary>Initializes a new instance of the <see cref="MySQLMoneyManager" /> class.</summary>
+        /// <param name="hostname">The hostname.</param>
+        /// <param name="database">The database.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="cpooling">The cpooling.</param>
+        /// <param name="port">The port.</param>
         public MySQLMoneyManager(string hostname,string database,string username ,string password,string cpooling, string port)
         {
             string s = "Server=" + hostname + ";Port=" + port + ";Database=" + database + 
@@ -50,12 +56,31 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Initializes a new instance of the <see cref="MySQLMoneyManager" /> class.</summary>
+        /// <param name="connect">The connect.</param>
         public MySQLMoneyManager(string connect)
         {
             Initialise(connect);
         }
 
 
+        /// <summary>Initialises the specified connect.</summary>
+        /// <param name="connect">The connect.</param>
+        /// <exception cref="Amib.Threading.Internal.WorkItem.WorkItemResult.Exception">
+        /// [MONEY MANAGER]: Connection error while using connection string ["+connectString+"]
+        /// or
+        /// [MONEY MANAGER]: Error initialising MySql Database: " + e.ToString()
+        /// or
+        /// [MONEY MANAGER]: Error creating balances table: " + e.ToString()
+        /// or
+        /// [MONEY MANAGER]: Error creating userinfo table: " + e.ToString()
+        /// or
+        /// [MONEY MANAGER]: Error creating transactions table: " + e.ToString()
+        /// or
+        /// [MONEY MANAGER]: Error creating totalsales table: " + e.ToString()
+        /// or
+        /// [MONEY MANAGER]: Error checking or creating tables: " + e.ToString()
+        /// </exception>
         private void Initialise(string connect)
         {
             try {
@@ -257,6 +282,8 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Gets the table version number.</summary>
+        /// <param name="version">The version.</param>
         private int getTableVersionNum(string version)
         {
             int nVer = 0;
@@ -270,11 +297,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             return nVer;
         }
 
-
-
-
-        // create Tables
-
+        /// <summary>Creates the balances table.</summary>
         private void CreateBalancesTable()
         {
             string sql = string.Empty;
@@ -294,6 +317,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Creates the user information table.</summary>
         private void CreateUserInfoTable()
         {
             string sql = string.Empty;
@@ -316,6 +340,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Creates the transactions table.</summary>
         private void CreateTransactionsTable()
         {
             string sql = string.Empty;
@@ -347,6 +372,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Creates the total sales table.</summary>
         private void CreateTotalSalesTable()
         {
             string sql = string.Empty;
@@ -371,8 +397,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
-        // update Balances Table
-
+        /// <summary>Updates the balances table1.</summary>
         private void UpdateBalancesTable1()
         {
             m_log.Info("[MONEY MANAGER]: Converting Balance Table...");
@@ -440,6 +465,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Updates the balances table2.</summary>
         private void UpdateBalancesTable2()
         {
             string sql = string.Empty;
@@ -455,6 +481,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Updates the balances table3.</summary>
         private void UpdateBalancesTable3()
         {
             string sql = string.Empty;
@@ -469,9 +496,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             cmd.Dispose();
         }
 
-
-        // update User Info Table
-
+        /// <summary>Updates the user information table1.</summary>
         private void UpdateUserInfoTable1()
         {
             //m_log.Info("[MONEY MANAGER]: Converting UserInfo Table...");
@@ -538,6 +563,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             }
         }
 
+        /// <summary>Updates the user information table2.</summary>
         private void UpdateUserInfoTable2()
         {
             string sql = string.Empty;
@@ -802,6 +828,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
 
         // update Total Sales Table
 
+        /// <summary>Updates the total sales table1.</summary>
         private void UpdateTotalSalesTable1()
         {
             string sql = string.Empty;
@@ -819,6 +846,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             initTotalSalesTable();
         }
 
+        /// <summary>Updates the total sales table2.</summary>
         private void UpdateTotalSalesTable2()
         {
             string sql = string.Empty;
@@ -834,7 +862,11 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
-
+        /// <summary>Checks the tables.</summary>
+        /// <returns>
+        ///   <br />
+        /// </returns>
+        /// <exception cref="Amib.Threading.Internal.WorkItem.WorkItemResult.Exception">[MONEY MANAGER]: Error checking tables" + e.ToString()</exception>
         private Dictionary<string,string> CheckTables()
         {
             Dictionary<string,string> tableDic = new Dictionary<string,string>();
@@ -885,16 +917,10 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             }
         }
 
-
-        //
-        // balances
-        //
-
         /// <summary>
         /// Get balance from database. returns -1 if failed.
         /// </summary>
         /// <param name="userID"></param>
-        /// <returns></returns>
         public int getBalance(string userID)
         {
             if (userID==UUID.Zero.ToString()) return 999999999; // System
@@ -929,6 +955,9 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Updates the balance.</summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="amount">The amount.</param>
         public bool updateBalance(string userID, int amount)
         {
             if (userID==UUID.Zero.ToString()) return true;  // System
@@ -948,6 +977,11 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Adds the user.</summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="balance">The balance.</param>
+        /// <param name="status">The status.</param>
+        /// <param name="type">The type.</param>
         public bool addUser(string userID, int balance, int status, int type)
         {
             if (userID==UUID.Zero.ToString()) return true;  // System
@@ -985,7 +1019,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         /// <param name="fromID"></param>
         /// <param name="toID"></param>
         /// <param name="amount"></param>
-        /// <returns></returns>
         public bool withdrawMoney(UUID transactionID, string senderID, int amount)
         {
             bool bRet = false;
@@ -1030,7 +1063,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         /// <param name="transactionID"></param>
         /// <param name="receiverID"></param>
         /// <param name="amount"></param>
-        /// <returns></returns>
         public bool giveMoney(UUID transactionID, string receiverID, int amount)
         {
             string sql = string.Empty;
@@ -1068,10 +1100,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
             return bRet;
         }
 
-
-        //
-        // totalsales
-        //
+        /// <summary>Initializes the total sales table.</summary>
         private void initTotalSalesTable()
         {
             m_log.Info("[MONEY MANAGER]: Initailising TotalSales Table...");
@@ -1120,6 +1149,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Deletes the total sales table.</summary>
         private void deleteTotalSalesTable()
         {
             string sql = string.Empty;
@@ -1135,6 +1165,13 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Adds the total sale.</summary>
+        /// <param name="userUUID">The user UUID.</param>
+        /// <param name="objectUUID">The object UUID.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="count">The count.</param>
+        /// <param name="amount">The amount.</param>
+        /// <param name="tmstamp">The tmstamp.</param>
         public bool addTotalSale(string userUUID, string objectUUID, int type, int count, int amount, int tmstamp)
         {
             bool bRet = false;
@@ -1164,6 +1201,11 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Updates the total sale.</summary>
+        /// <param name="saleUUID">The sale UUID.</param>
+        /// <param name="count">The count.</param>
+        /// <param name="amount">The amount.</param>
+        /// <param name="tmstamp">The tmstamp.</param>
         public bool updateTotalSale(UUID saleUUID, int count, int amount, int tmstamp)
         {
             bool bRet = false;
@@ -1186,6 +1228,13 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
 
         }
 
+        /// <summary>Sets the total sale.</summary>
+        /// <param name="userUUID">The user UUID.</param>
+        /// <param name="objectUUID">The object UUID.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="count">The count.</param>
+        /// <param name="amount">The amount.</param>
+        /// <param name="tmstamp">The tmstamp.</param>
         public bool setTotalSale(string userUUID, string objectUUID, int type, int count, int amount, int tmstamp)
         {
             bool bRet = false;
@@ -1235,6 +1284,8 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         //
         // transactions
         //
+        /// <summary>Adds the transaction.</summary>
+        /// <param name="transaction">The transaction.</param>
         public bool addTransaction(TransactionData transaction)
         {
             bool bRet = false;
@@ -1274,6 +1325,10 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Updates the transaction status.</summary>
+        /// <param name="transactionID">The transaction identifier.</param>
+        /// <param name="status">The status.</param>
+        /// <param name="description">The description.</param>
         public bool updateTransactionStatus(UUID transactionID, int status, string description)
         {
             bool bRet = false;
@@ -1292,6 +1347,8 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Sets the trans expired.</summary>
+        /// <param name="deadTime">The dead time.</param>
         public bool SetTransExpired(int deadTime)
         {
             bool bRet = false;
@@ -1317,7 +1374,6 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         /// </summary>
         /// <param name="userID"></param>
         /// <param name="transactionID"></param>
-        /// <returns></returns>
         public bool ValidateTransfer(string secureCode, UUID transactionID)
         {
             bool bRet = false;
@@ -1347,6 +1403,8 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Fetches the transaction.</summary>
+        /// <param name="transactionID">The transaction identifier.</param>
         public TransactionData FetchTransaction(UUID transactionID)
         {
             TransactionData transactionData = new TransactionData();
@@ -1395,6 +1453,12 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Fetches the transaction.</summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="endTime">The end time.</param>
+        /// <param name="index">The index.</param>
+        /// <param name="retNum">The ret number.</param>
         public TransactionData[] FetchTransaction(string userID, int startTime, int endTime, uint index, uint retNum)
         {
             List<TransactionData> rows = new List<TransactionData>();
@@ -1457,6 +1521,10 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Gets the transaction number.</summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="endTime">The end time.</param>
         public int getTransactionNum(string userID, int startTime, int endTime)
         {
             int iRet = -1;
@@ -1490,6 +1558,8 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         //
         // userinfo
         //
+        /// <summary>Adds the user information.</summary>
+        /// <param name="userInfo"></param>
         public bool addUserInfo(UserInfo userInfo)
         {
             bool bRet = false;
@@ -1524,6 +1594,8 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Fetches the user information.</summary>
+        /// <param name="userID">The user identifier.</param>
         public UserInfo fetchUserInfo(string userID)
         {
             UserInfo userInfo = new UserInfo();
@@ -1561,6 +1633,8 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         }
 
 
+        /// <summary>Updates the user information.</summary>
+        /// <param name="userInfo"></param>
         public bool updateUserInfo(UserInfo userInfo)
         {
             bool bRet = false;

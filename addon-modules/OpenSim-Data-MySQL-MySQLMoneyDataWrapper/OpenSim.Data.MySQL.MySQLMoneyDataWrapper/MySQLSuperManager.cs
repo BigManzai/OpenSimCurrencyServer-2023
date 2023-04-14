@@ -28,12 +28,14 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         public MySQLMoneyManager Manager;
         public string Running;
 
+        /// <summary>Gets the lock.</summary>
         public void GetLock()
         {
             Locked = true;
             m_lock.WaitOne();
         }
 
+        /// <summary>Releases this instance.</summary>
         public void Release()
         {
             m_lock.ReleaseMutex();

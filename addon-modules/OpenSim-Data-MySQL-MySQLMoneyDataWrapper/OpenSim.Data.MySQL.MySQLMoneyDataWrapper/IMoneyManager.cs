@@ -21,33 +21,76 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
 {
     public interface IMoneyManager
     {
+        /// <summary>Gets the balance.</summary>
+        /// <param name="userID">The user identifier.</param>
         int getBalance(string userID);
 
+        /// <summary>Withdraws the money.</summary>
+        /// <param name="transactionID">The transaction identifier.</param>
+        /// <param name="senderID">The sender identifier.</param>
+        /// <param name="amount">The amount.</param>
         bool withdrawMoney(UUID transactionID,string senderID, int amount);
 
+        /// <summary>Gives the money.</summary>
+        /// <param name="transactionID">The transaction identifier.</param>
+        /// <param name="receiverID">The receiver identifier.</param>
+        /// <param name="amount">The amount.</param>
         bool giveMoney(UUID transactionID,string receiverID, int amount);
 
+        /// <summary>Adds the transaction.</summary>
+        /// <param name="transaction">The transaction.</param>
         bool addTransaction(TransactionData transaction);
 
+        /// <summary>Updates the transaction status.</summary>
+        /// <param name="transactionID">The transaction identifier.</param>
+        /// <param name="status">The status.</param>
+        /// <param name="description">The description.</param>
         bool updateTransactionStatus(UUID transactionID, int status,string description);
 
+        /// <summary>Fetches the transaction.</summary>
+        /// <param name="transactionID">The transaction identifier.</param>
         TransactionData FetchTransaction(UUID transactionID);
 
+        /// <summary>Fetches the transaction.</summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="endTime">The end time.</param>
+        /// <param name="index">The index.</param>
+        /// <param name="retNum">The ret number.</param>
         TransactionData[] FetchTransaction(string userID, int startTime, int endTime, uint index,uint retNum);
 
+        /// <summary>Gets the transaction number.</summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="endTime">The end time.</param>
         int getTransactionNum(string userID, int startTime, int endTime);
 
+        /// <summary>Adds the user.</summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="balance">The balance.</param>
+        /// <param name="status">The status.</param>
+        /// <param name="type">The type.</param>
         bool addUser(string userID, int balance, int status, int type);
 
+        /// <summary>Sets the trans expired.</summary>
+        /// <param name="deadTime">The dead time.</param>
         bool SetTransExpired(int deadTime);
 
+        /// <summary>Validates the transfer.</summary>
+        /// <param name="secureCode">The secure code.</param>
+        /// <param name="transactionID">The transaction identifier.</param>
         bool ValidateTransfer(string secureCode, UUID transactionID);
 
+        /// <summary>Adds the user information.</summary>
+        /// <param name="user">The user.</param>
         bool addUserInfo(UserInfo user);
 
+        /// <summary>Fetches the user information.</summary>
+        /// <param name="userID">The user identifier.</param>
         UserInfo fetchUserInfo(string userID);
 
+        /// <summary>Updates the user information.</summary>
+        /// <param name="user">The user.</param>
         bool updateUserInfo(UserInfo user);
-
     }
 }
