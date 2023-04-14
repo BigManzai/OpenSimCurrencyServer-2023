@@ -109,11 +109,16 @@ namespace OpenSim.Grid.MoneyServer
         protected BaseHttpServer m_httpServer;
 
 
+        /// <summary>Initializes a new instance of the <see cref="MoneyXmlRpcModule" /> class.</summary>
         public MoneyXmlRpcModule()
         {
         }
 
-        public void Initialise(string opensimVersion, IMoneyDBService moneyDBService, IMoneyServiceCore moneyCore) 
+        /// <summary>Initialises the specified opensim version.</summary>
+        /// <param name="opensimVersion">The opensim version.</param>
+        /// <param name="moneyDBService">The money database service.</param>
+        /// <param name="moneyCore">The money core.</param>
+        public void Initialise(string opensimVersion, IMoneyDBService moneyDBService, IMoneyServiceCore moneyCore)
         {
             //m_opensimVersion = opensimVersion;
             m_moneyDBService = moneyDBService;
@@ -190,10 +195,12 @@ namespace OpenSim.Grid.MoneyServer
             RegisterHandlers();
         }
 
+        /// <summary>Posts the initialise.</summary>
         public void PostInitialise()
         {   
         }
 
+        /// <summary>Registers the handlers.</summary>
         public void RegisterHandlers()
         {
             m_httpServer = m_moneyCore.GetHttpServer();
@@ -226,30 +233,48 @@ namespace OpenSim.Grid.MoneyServer
             m_httpServer.AddXmlRPCHandler("buyCurrency",          buy_func);
         }
 
+        /// <summary>Buys the function.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="client">The client.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         private XmlRpcResponse buy_func(XmlRpcRequest request, IPEndPoint client)
         {
             m_log.InfoFormat("[MONEY XMLRPC]: handleClient buyCurrency.");
             throw new NotImplementedException();            
         }
 
+        /// <summary>Quotes the function.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="client">The client.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         private XmlRpcResponse quote_func(XmlRpcRequest request, IPEndPoint client)
         {
             m_log.InfoFormat("[MONEY XMLRPC]: handleClient getCurrencyQuote.");
             throw new NotImplementedException();            
         }
 
+        /// <summary>Lands the buy function.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="client">The client.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         private XmlRpcResponse landBuy_func(XmlRpcRequest request, IPEndPoint client)
         {
             m_log.InfoFormat("[MONEY XMLRPC]: handleClient buyLandPrep.");
             throw new NotImplementedException();            
         }
 
+        /// <summary>Preflights the buy land prep function.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="client">The client.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         private XmlRpcResponse preflightBuyLandPrep_func(XmlRpcRequest request, IPEndPoint client)
         {
             m_log.InfoFormat("[MONEY XMLRPC]: handleClient preflightBuyLandPrep.");
             throw new NotImplementedException();            
         }
 
+        /// <summary>Gets the name of the SSL common.</summary>
+        /// <param name="request">The request.</param>
         public string GetSSLCommonName(XmlRpcRequest request)
         {
             if (request.Params.Count>5) {
@@ -265,6 +290,7 @@ namespace OpenSim.Grid.MoneyServer
             return m_sslCommonName;
         }
 
+        /// <summary>Gets the name of the SSL common.</summary>
         public string GetSSLCommonName()
         {
             return m_sslCommonName;
@@ -1325,12 +1351,10 @@ namespace OpenSim.Grid.MoneyServer
             return false;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="remoteClient"></param>
-        /// <returns></returns>
+
+        /// <summary>Handles the cancel transfer.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="remoteClient">The remote client.</param>
         public XmlRpcResponse handleCancelTransfer(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             GetSSLCommonName(request);
@@ -1375,12 +1399,10 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="remoteClient"></param>
-        /// <returns></returns>
+
+        /// <summary>Handles the get transaction.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="remoteClient">The remote client.</param>
         public XmlRpcResponse handleGetTransaction(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             GetSSLCommonName(request);
@@ -1448,6 +1470,9 @@ namespace OpenSim.Grid.MoneyServer
 
         // In development
 
+        /// <summary>Handles the web login.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="remoteClient">The remote client.</param>
         public XmlRpcResponse handleWebLogin(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             GetSSLCommonName(request);
@@ -1484,6 +1509,9 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Handles the web logout.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="remoteClient">The remote client.</param>
         public XmlRpcResponse handleWebLogout(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             GetSSLCommonName(request);

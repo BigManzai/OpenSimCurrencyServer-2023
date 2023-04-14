@@ -40,6 +40,8 @@ namespace OpenSim.Grid.MoneyServer
         public int m_lastConnect = 0;
 
 
+        /// <summary>Initializes a new instance of the <see cref="MoneyDBService" /> class.</summary>
+        /// <param name="connect">The connect.</param>
         public MoneyDBService(string connect)
         {
             m_connect = connect;
@@ -47,11 +49,16 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Initializes a new instance of the <see cref="MoneyDBService" /> class.</summary>
         public MoneyDBService()
         {
         }
 
 
+        /// <summary>Initialises the specified connection string.</summary>
+        /// <param name="connectionString">The connection string.</param>
+        /// <param name="maxDBConnections">The maximum database connections.</param>
+        /// <exception cref="Amib.Threading.Internal.WorkItem.WorkItemResult.Exception">Failed to initialise MySql database</exception>
         public void Initialise(string connectionString, int maxDBConnections)
         {
             m_connect = connectionString;
@@ -71,6 +78,7 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Reconnects this instance.</summary>
         public void Reconnect()
         {
             for (int i=0; i<m_maxConnections; i++) {
@@ -80,6 +88,7 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Gets the locked connection.</summary>
         private MySQLSuperManager GetLockedConnection()
         {
             int lockedCons = 0;
@@ -105,6 +114,8 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Gets the balance.</summary>
+        /// <param name="userID">The user identifier.</param>
         public int getBalance(string userID)
         {
             MySQLSuperManager dbm = GetLockedConnection();
@@ -128,6 +139,10 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Withdraws the money.</summary>
+        /// <param name="transactionID">The transaction identifier.</param>
+        /// <param name="senderID">The sender identifier.</param>
+        /// <param name="amount">The amount.</param>
         public bool withdrawMoney(UUID transactionID, string senderID, int amount)
         {
             MySQLSuperManager dbm = GetLockedConnection();
@@ -151,6 +166,10 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Gives the money.</summary>
+        /// <param name="transactionID">The transaction identifier.</param>
+        /// <param name="receiverID">The receiver identifier.</param>
+        /// <param name="amount">The amount.</param>
         public bool giveMoney(UUID transactionID, string receiverID, int amount)
         {
             MySQLSuperManager dbm = GetLockedConnection();
@@ -174,6 +193,8 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Sets the total sale.</summary>
+        /// <param name="transaction">The transaction.</param>
         public bool setTotalSale(TransactionData transaction)
         {
 			if (transaction.Receiver==transaction.Sender) return false;
@@ -200,6 +221,8 @@ namespace OpenSim.Grid.MoneyServer
             }
         }
 
+        /// <summary>Adds the transaction.</summary>
+        /// <param name="transaction">The transaction.</param>
         public bool addTransaction(TransactionData transaction)
         {
             MySQLSuperManager dbm = GetLockedConnection();
@@ -222,6 +245,11 @@ namespace OpenSim.Grid.MoneyServer
             }
         }
 
+        /// <summary>Adds the user.</summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="balance">The balance.</param>
+        /// <param name="status">The status.</param>
+        /// <param name="type">The type.</param>
         public bool addUser(string userID, int balance, int status, int type)
         {
             TransactionData transaction = new TransactionData();
@@ -268,6 +296,10 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Updates the transaction status.</summary>
+        /// <param name="transactionID">The transaction identifier.</param>
+        /// <param name="status">The status.</param>
+        /// <param name="description">The description.</param>
         public bool updateTransactionStatus(UUID transactionID, int status, string description)
         {
             MySQLSuperManager dbm = GetLockedConnection();
@@ -291,6 +323,8 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Sets the trans expired.</summary>
+        /// <param name="deadTime">The dead time.</param>
         public bool SetTransExpired(int deadTime)
         {
             MySQLSuperManager dbm = GetLockedConnection();
@@ -313,6 +347,9 @@ namespace OpenSim.Grid.MoneyServer
             }
         }
 
+        /// <summary>Validates the transfer.</summary>
+        /// <param name="secureCode">The secure code.</param>
+        /// <param name="transactionID">The transaction identifier.</param>
         public bool ValidateTransfer(string secureCode, UUID transactionID)
         {
             MySQLSuperManager dbm = GetLockedConnection();
@@ -336,6 +373,8 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Fetches the transaction.</summary>
+        /// <param name="transactionID">The transaction identifier.</param>
         public TransactionData FetchTransaction(UUID transactionID)
         {
             MySQLSuperManager dbm = GetLockedConnection();
@@ -359,6 +398,11 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Fetches the transaction.</summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="endTime">The end time.</param>
+        /// <param name="lastIndex">The last index.</param>
         public TransactionData FetchTransaction(string userID, int startTime, int endTime, int lastIndex)
         {
             MySQLSuperManager dbm = GetLockedConnection();
@@ -394,6 +438,8 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
+        /// <summary>Does the transfer.</summary>
+        /// <param name="transactionUUID">The transaction UUID.</param>
         public bool DoTransfer(UUID transactionUUID)
         {
 			bool do_trans = false;
@@ -452,7 +498,9 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
-		// by Fumi.Iseki
+        // by Fumi.Iseki
+        /// <summary>Does the add money.</summary>
+        /// <param name="transactionUUID">The transaction UUID.</param>
         public bool DoAddMoney(UUID transactionUUID)
         {
             TransactionData transaction = new TransactionData();
@@ -481,7 +529,8 @@ namespace OpenSim.Grid.MoneyServer
             return false;
         }
 
-		// userinfo
+        /// <summary>Tries the add user information.</summary>
+        /// <param name="user">The user.</param>
         public bool TryAddUserInfo(UserInfo user)
         {
             MySQLSuperManager dbm = GetLockedConnection();
@@ -524,6 +573,8 @@ namespace OpenSim.Grid.MoneyServer
             }
         }
 
+        /// <summary>Fetches the user information.</summary>
+        /// <param name="userID">The user identifier.</param>
         public UserInfo FetchUserInfo(string userID)
         {
             UserInfo userInfo = null;
@@ -549,6 +600,10 @@ namespace OpenSim.Grid.MoneyServer
             }
         }
 
+        /// <summary>Gets the transaction number.</summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="endTime">The end time.</param>
         public int getTransactionNum(string userID, int startTime, int endTime)
         {
             MySQLSuperManager dbm = GetLockedConnection();
