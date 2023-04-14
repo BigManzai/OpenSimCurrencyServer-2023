@@ -3,7 +3,6 @@
  *
  */
 
-#pragma warning disable S1128 // Unused "using" should be removed
 using System;
 using System.Net;
 using System.Net.Security;
@@ -11,7 +10,6 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using log4net;
 using Mono.Security;
-#pragma warning restore S1128 // Unused "using" should be removed
 
 
 namespace NSL.Certificate.Tools 
