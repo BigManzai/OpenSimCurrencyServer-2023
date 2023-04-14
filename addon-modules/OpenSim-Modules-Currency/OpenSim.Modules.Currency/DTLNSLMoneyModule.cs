@@ -23,21 +23,17 @@ using System.Text;
 using System.Reflection;
 using System.Net;
 using System.Security.Cryptography;
-
 using log4net;
 using Nini.Config;
 using Nwc.XmlRpc;
 using Mono.Addins;
-
 using OpenMetaverse;
-
 using OpenSim.Framework;
 using OpenSim.Framework.Servers;
 using OpenSim.Framework.Servers.HttpServer;
 using OpenSim.Services.Interfaces;
 using OpenSim.Region.Framework.Interfaces;
 using OpenSim.Region.Framework.Scenes;
-
 using OpenSim.Data.MySQL.MySQLMoneyDataWrapper;
 using NSL.Certificate.Tools;
 using NSL.Network.XmlRpc;
@@ -165,11 +161,10 @@ namespace OpenSim.Modules.Currency
         private float EnergyEfficiency          = 1.0f;
 
 
-        /// <summary>
-        /// Initialise
-        /// </summary>
-        /// <param name="scene"></param>
-        /// <param name="source"></param>
+
+        /// <summary>Initialises the specified scene.</summary>
+        /// <param name="scene">The scene.</param>
+        /// <param name="source">The source.</param>
         public void Initialise(Scene scene, IConfigSource source)
         {
             Initialise(source);
@@ -179,6 +174,12 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>
+        /// This is called to initialize the region module. For shared modules, this is called
+        /// exactly once, after creating the single (shared) instance. For non-shared modules,
+        /// this is called once on each instance, after the instace for the region has been created.
+        /// </summary>
+        /// <param name="source">A <see cref="T:Nini.Config.IConfigSource" /></param>
         public void Initialise(IConfigSource source)
         {
             //m_log.InfoFormat("[MONEY MODULE]: Initialise:");
@@ -267,6 +268,11 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>
+        /// This is called whenever a <see cref="T:OpenSim.Region.Framework.Scenes.Scene" /> is added. For shared modules, this can happen several times.
+        /// For non-shared modules, this happens exactly once, after <see cref="M:OpenSim.Region.Framework.Interfaces.IRegionModuleBase.Initialise(Nini.Config.IConfigSource)" /> has been called.
+        /// </summary>
+        /// <param name="scene">A <see cref="T:OpenSim.Region.Framework.Scenes.Scene" /></param>
         public void AddRegion(Scene scene)
         {
             //m_log.InfoFormat("[MONEY MODULE]: AddRegion:");
@@ -318,6 +324,11 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>
+        /// This is called whenever a <see cref="T:OpenSim.Region.Framework.Scenes.Scene" /> is removed. For shared modules, this can happen several times.
+        /// For non-shared modules, this happens exactly once, if the scene this instance is associated with is removed.
+        /// </summary>
+        /// <param name="scene">A <see cref="T:OpenSim.Region.Framework.Scenes.Scene" /></param>
         public void RemoveRegion(Scene scene)
         {
             if (scene==null) return;
@@ -335,44 +346,85 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>
+        /// This will be called once for every scene loaded. In a shared module
+        /// this will be multiple times in one instance, while a nonshared
+        /// module instance will only be called once.
+        /// This method is called after AddRegion has been called in all
+        /// modules for that scene, providing an opportunity to request
+        /// another module's interface, or hook an event from another module.
+        /// </summary>
+        /// <param name="scene">A <see cref="T:OpenSim.Region.Framework.Scenes.Scene" /></param>
         public void RegionLoaded(Scene scene)
         {
         }
 
 
+        /// <summary>
+        /// If this returns non-null, it is the type of an interface that
+        /// this module intends to register.
+        /// This will cause the loader to defer loading of this module
+        /// until all other modules have been loaded. If no other module
+        /// has registered the interface by then, this module will be
+        /// activated, else it will remain inactive, letting the other module
+        /// take over. This should return non-null ONLY in modules that are
+        /// intended to be easily replaceable, e.g. stub implementations
+        /// that the developer expects to be replaced by third party provided
+        /// modules.
+        /// </summary>
         public Type ReplaceableInterface
         {
             get { return null; }
         }
 
 
+        /// <summary>Gets a value indicating whether this instance is shared module.</summary>
+        /// <value>
+        ///   <c>true</c> if this instance is shared module; otherwise, <c>false</c>.</value>
         public bool IsSharedModule
         {
             get { return true; }
         }
 
 
+        /// <summary>
+        ///   <br />
+        /// </summary>
+        /// <value>The name of the module</value>
         public string Name
         {
             get { return "DTLNSLMoneyModule"; }
         }
 
 
+        /// <summary>
+        /// This is called exactly once after all the shared region-modules have been instanciated and
+        /// <see cref="M:OpenSim.Region.Framework.Interfaces.IRegionModuleBase.Initialise(Nini.Config.IConfigSource)" />d.
+        /// </summary>
         public void PostInitialise()
         {
 
         }
 
 
+        /// <summary>
+        /// This is the inverse to <see cref="M:OpenSim.Region.Framework.Interfaces.IRegionModuleBase.Initialise(Nini.Config.IConfigSource)" />. After a Close(), this instance won't be usable anymore.
+        /// </summary>
         public void Close()
         {
 
         }
 
-
-
-
-        // for LSL llGiveMoney() function
+        /// <summary>Objects the give money.</summary>
+        /// <param name="objectID">The object identifier.</param>
+        /// <param name="fromID">From identifier.</param>
+        /// <param name="toID">To identifier.</param>
+        /// <param name="amount">The amount.</param>
+        /// <param name="txn">The TXN.</param>
+        /// <param name="result">The result.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public bool ObjectGiveMoney(UUID objectID, UUID fromID, UUID toID, int amount, UUID txn, out string result)
         {
             result = string.Empty;
@@ -419,6 +471,8 @@ namespace OpenSim.Modules.Currency
 
 
         //
+        /// <summary>Gets the upload charge.</summary>
+        /// <value>The upload charge.</value>
         public int UploadCharge
         {
             get { return PriceUpload; }
@@ -426,12 +480,16 @@ namespace OpenSim.Modules.Currency
 
 
         //
+        /// <summary>Gets the group creation charge.</summary>
+        /// <value>The group creation charge.</value>
         public int GroupCreationCharge
         {
             get { return PriceGroupCreate; }
         }
 
 
+        /// <summary>Gets the balance.</summary>
+        /// <param name="agentID">The agent identifier.</param>
         public int GetBalance(UUID agentID)
         {
             IClientAPI client = GetLocateClient(agentID);
@@ -439,6 +497,9 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>Uploads the covered.</summary>
+        /// <param name="agentID">The agent identifier.</param>
+        /// <param name="amount">The amount.</param>
         public bool UploadCovered(UUID agentID, int amount)
         {
             IClientAPI client = GetLocateClient(agentID);
@@ -451,6 +512,9 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>Amounts the covered.</summary>
+        /// <param name="agentID">The agent identifier.</param>
+        /// <param name="amount">The amount.</param>
         public bool AmountCovered(UUID agentID, int amount)
         {
             IClientAPI client = GetLocateClient(agentID);
@@ -463,6 +527,10 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>Applies the upload charge.</summary>
+        /// <param name="agentID">The agent identifier.</param>
+        /// <param name="amount">The amount.</param>
+        /// <param name="text">The text.</param>
         public void ApplyUploadCharge(UUID agentID, int amount, string text)
         {
             ulong regionHandle = GetLocateScene(agentID).RegionInfo.RegionHandle;
@@ -471,12 +539,21 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>Applies the charge.</summary>
+        /// <param name="agentID">The agent identifier.</param>
+        /// <param name="amount">The amount.</param>
+        /// <param name="type">The type.</param>
         public void ApplyCharge(UUID agentID, int amount, MoneyTransactionType type)
         {
             ApplyCharge(agentID, amount, type, string.Empty);
         }
 
 
+        /// <summary>Applies the charge.</summary>
+        /// <param name="agentID">The agent identifier.</param>
+        /// <param name="amount">The amount.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="text">The text.</param>
         public void ApplyCharge(UUID agentID, int amount, MoneyTransactionType type, string text)
         {
             ulong regionHandle = GetLocateScene(agentID).RegionInfo.RegionHandle;
@@ -485,12 +562,32 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>Transfers the specified from identifier.</summary>
+        /// <param name="fromID">From identifier.</param>
+        /// <param name="toID">To identifier.</param>
+        /// <param name="regionHandle">The region handle.</param>
+        /// <param name="amount">The amount.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="text">The text.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public bool Transfer(UUID fromID, UUID toID, int regionHandle, int amount, MoneyTransactionType type, string text)
         {
             return TransferMoney(fromID, toID, amount, (int)type, UUID.Zero, (ulong)regionHandle, UUID.Zero, text);
         }
 
 
+        /// <summary>Transfers the specified from identifier.</summary>
+        /// <param name="fromID">From identifier.</param>
+        /// <param name="toID">To identifier.</param>
+        /// <param name="objectID">The object identifier.</param>
+        /// <param name="amount">The amount.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="text">The text.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public bool Transfer(UUID fromID, UUID toID, UUID objectID, int amount, MoneyTransactionType type, string text)
         {
             SceneObjectPart sceneObj = GetLocatePrim(objectID);
@@ -503,12 +600,26 @@ namespace OpenSim.Modules.Currency
 
 
         // for 0.8.3 over
+        /// <summary>Moves the money.</summary>
+        /// <param name="fromAgentID">From agent identifier.</param>
+        /// <param name="toAgentID">To agent identifier.</param>
+        /// <param name="amount">The amount.</param>
+        /// <param name="text">The text.</param>
         public void MoveMoney(UUID fromAgentID, UUID toAgentID, int amount, string text)
         {
             ForceTransferMoney(fromAgentID, toAgentID, amount, (int)TransactionType.MoveMoney, UUID.Zero, (ulong)0, UUID.Zero, text);
         }
 
         // for 0.9.1 over
+        /// <summary>Moves the money.</summary>
+        /// <param name="fromAgentID">From agent identifier.</param>
+        /// <param name="toAgentID">To agent identifier.</param>
+        /// <param name="amount">The amount.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="text">The text.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public bool MoveMoney(UUID fromAgentID, UUID toAgentID, int amount, MoneyTransactionType type, string text)
         {
             bool ret = ForceTransferMoney(fromAgentID, toAgentID, amount, (int)type, UUID.Zero, (ulong)0, UUID.Zero, text);
@@ -517,6 +628,8 @@ namespace OpenSim.Modules.Currency
 
 
 
+        /// <summary>Called when [new client].</summary>
+        /// <param name="client">The client.</param>
         private void OnNewClient(IClientAPI client)
         {
             client.OnEconomyDataRequest += OnEconomyDataRequest;
@@ -528,6 +641,8 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>Called when [make root agent].</summary>
+        /// <param name="agent">The agent.</param>
         public void OnMakeRootAgent(ScenePresence agent)
         {
             int balance = 0;
@@ -536,10 +651,12 @@ namespace OpenSim.Modules.Currency
             m_enable_server = LoginMoneyServer(agent, out balance);
             client.SendMoneyBalance(UUID.Zero, true, new byte[0], balance, 0, UUID.Zero, false, UUID.Zero, false, 0, String.Empty);
 
-        }      
+        }
 
 
         // for OnClientClosed event
+        /// <summary>Clients the closed.</summary>
+        /// <param name="client">The client.</param>
         private void ClientClosed(IClientAPI client)
         {
             if (m_enable_server && client!=null) {
@@ -549,12 +666,17 @@ namespace OpenSim.Modules.Currency
 
 
         // for OnMakeChildAgent event
+        /// <summary>Makes the child agent.</summary>
+        /// <param name="avatar">The avatar.</param>
         private void MakeChildAgent(ScenePresence avatar)
         {
         }
 
 
         // for OnMoneyTransfer event 
+        /// <summary>Moneys the transfer action.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="moneyEvent">The money event.</param>
         private void MoneyTransferAction(Object sender, EventManager.MoneyTransferArgs moneyEvent)
         {
             if (!m_sellEnabled) return;
@@ -597,6 +719,9 @@ namespace OpenSim.Modules.Currency
 
 
         // for OnValidateLandBuy event
+        /// <summary>Validates the land buy.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="landBuyEvent">The land buy event.</param>
         private void ValidateLandBuy(Object sender, EventManager.LandBuyArgs landBuyEvent)
         {
             IClientAPI senderClient = GetLocateClient(landBuyEvent.agentId);
@@ -613,6 +738,9 @@ namespace OpenSim.Modules.Currency
 
 
         // for LandBuy even
+        /// <summary>Processes the land buy.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="landBuyEvent">The land buy event.</param>
         private void processLandBuy(Object sender, EventManager.LandBuyArgs landBuyEvent)
         {
             if (!m_sellEnabled) return;
@@ -636,6 +764,15 @@ namespace OpenSim.Modules.Currency
 
 
         // for OnObjectBuy event
+        /// <summary>Called when [object buy].</summary>
+        /// <param name="remoteClient">The remote client.</param>
+        /// <param name="agentID">The agent identifier.</param>
+        /// <param name="sessionID">The session identifier.</param>
+        /// <param name="groupID">The group identifier.</param>
+        /// <param name="categoryID">The category identifier.</param>
+        /// <param name="localID">The local identifier.</param>
+        /// <param name="saleType">Type of the sale.</param>
+        /// <param name="salePrice">The sale price.</param>
         public void OnObjectBuy(IClientAPI remoteClient, UUID agentID, UUID sessionID, 
                                 UUID groupID, UUID categoryID, uint localID, byte saleType, int salePrice)
         {
@@ -712,6 +849,9 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>Called when [request pay price].</summary>
+        /// <param name="client">The client.</param>
+        /// <param name="objectID">The object identifier.</param>
         private void OnRequestPayPrice(IClientAPI client, UUID objectID)
         {
             m_log.InfoFormat("[MONEY MODULE]: OnRequestPayPrice:");
@@ -729,6 +869,8 @@ namespace OpenSim.Modules.Currency
 
         //
         //private void OnEconomyDataRequest(UUID agentId)
+        /// <summary>Called when [economy data request].</summary>
+        /// <param name="user">The user.</param>
         private void OnEconomyDataRequest(IClientAPI user)
         {
             if (user!=null) {
@@ -746,6 +888,12 @@ namespace OpenSim.Modules.Currency
 
 
         // "OnMoneyTransfered" RPC from MoneyServer
+        /// <summary>Called when [money transfered handler].</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="remoteClient">The remote client.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public XmlRpcResponse OnMoneyTransferedHandler(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             m_log.InfoFormat("[MONEY MODULE]: OnMoneyTransferedHandler:");
@@ -798,6 +946,12 @@ namespace OpenSim.Modules.Currency
 
 
         // "UpdateBalance" RPC from MoneyServer or Script
+        /// <summary>Balances the update handler.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="remoteClient">The remote client.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public XmlRpcResponse BalanceUpdateHandler(XmlRpcRequest request, IPEndPoint remoteClient)
         {
 
@@ -851,6 +1005,12 @@ namespace OpenSim.Modules.Currency
 
 
         // "UserAlert" RPC from Script
+        /// <summary>Users the alert handler.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="remoteClient">The remote client.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public XmlRpcResponse UserAlertHandler(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             //m_log.InfoFormat("[MONEY MODULE]: UserAlertHandler:");
@@ -893,6 +1053,12 @@ namespace OpenSim.Modules.Currency
 
 
         // "GetBalance" RPC from Script
+        /// <summary>Gets the balance handler.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="remoteClient">The remote client.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public XmlRpcResponse GetBalanceHandler(XmlRpcRequest request, IPEndPoint remoteClient)
         {
 
@@ -934,6 +1100,12 @@ namespace OpenSim.Modules.Currency
 
 
         // "AddBankerMoney" RPC from Script
+        /// <summary>Adds the banker money handler.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="remoteClient">The remote client.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public XmlRpcResponse AddBankerMoneyHandler(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             //m_log.InfoFormat("[MONEY MODULE]: AddBankerMoneyHandler:");
@@ -990,6 +1162,12 @@ namespace OpenSim.Modules.Currency
 
 
         // "SendMoney" RPC from Script
+        /// <summary>Sends the money handler.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="remoteClient">The remote client.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public XmlRpcResponse SendMoneyHandler(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             bool ret = false;
@@ -1046,6 +1224,12 @@ namespace OpenSim.Modules.Currency
 
 
         // "MoveMoney" RPC from Script
+        /// <summary>Moves the money handler.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="remoteClient">The remote client.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public XmlRpcResponse MoveMoneyHandler(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             bool ret = false;
@@ -1392,6 +1576,11 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>Queries the balance from money server.</summary>
+        /// <param name="client">The client.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         private int QueryBalanceFromMoneyServer(IClientAPI client)
         {
             //m_log.InfoFormat("[MONEY MODULE]: QueryBalanceFromMoneyServer:");
@@ -1566,6 +1755,12 @@ namespace OpenSim.Modules.Currency
 
 
         //
+        /// <summary>Gets the transaction information.</summary>
+        /// <param name="client">The client.</param>
+        /// <param name="transactionID">The transaction identifier.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         private EventManager.MoneyTransferArgs GetTransactionInfo(IClientAPI client, string transactionID)
         {
             EventManager.MoneyTransferArgs args = null;
@@ -1690,6 +1885,11 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>Gets the locate scene.</summary>
+        /// <param name="AgentId">The agent identifier.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         private Scene GetLocateScene(UUID AgentId)
         {
             Scene scene = null;
@@ -1710,6 +1910,11 @@ namespace OpenSim.Modules.Currency
         }
 
 
+        /// <summary>Gets the locate prim.</summary>
+        /// <param name="objectID">The object identifier.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         private SceneObjectPart GetLocatePrim(UUID objectID)
         {
             SceneObjectPart sceneObj = null;

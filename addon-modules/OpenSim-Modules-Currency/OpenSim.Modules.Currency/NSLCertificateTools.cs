@@ -30,9 +30,7 @@ namespace NSL.Certificate.Tools
         private Mono.Security.X509.X509Crl m_clientcrl  = null;
 
 
-        /// <summary>
-        /// NSL Certificate Verify
-        /// </summary>
+        /// <summary>NSL Certificate Verify</summary>
         public NSLCertificateVerify()
         {
             m_chain     = null;
@@ -112,6 +110,8 @@ namespace NSL.Certificate.Tools
             }
         }
 
+        /// <summary>Sets the private CRL.</summary>
+        /// <param name="crlfile">The crlfile.</param>
         public void SetPrivateCRL(string crlfile)
         {
             try {

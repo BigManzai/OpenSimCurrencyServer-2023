@@ -25,17 +25,24 @@ namespace NSL.Network.XmlRpc
     {
         private static readonly ILog m_log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        // The encoding
         private Encoding _encoding = new UTF8Encoding();
+        // The serializer
         private XmlRpcRequestSerializer _serializer = new XmlRpcRequestSerializer();
+        // The deserializer
         private XmlRpcResponseDeserializer _deserializer = new XmlRpcResponseDeserializer();
 
 
+        /// <summary>Initializes a new instance of the <see cref="NSLXmlRpcRequest" /> class.</summary>
         public NSLXmlRpcRequest()
         {
             _params = new ArrayList();
         }
 
 
+        /// <summary>Initializes a new instance of the <see cref="NSLXmlRpcRequest" /> class.</summary>
+        /// <param name="methodName">Name of the method.</param>
+        /// <param name="parameters">The parameters.</param>
         public NSLXmlRpcRequest(String methodName, IList parameters)
         {
             MethodName = methodName;
@@ -44,6 +51,15 @@ namespace NSL.Network.XmlRpc
 
 
         //public XmlRpcResponse certSend(String url, X509Certificate2 myClientCert, bool checkServerCert, Int32 timeout)
+        /// <summary>Certs the send.</summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="certVerify">The cert verify.</param>
+        /// <param name="checkServerCert">if set to <c>true</c> [check server cert].</param>
+        /// <param name="timeout">The timeout.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
+        /// <exception cref="Nwc.XmlRpc.XmlRpcException"></exception>
         public XmlRpcResponse certSend(String url, NSLCertificateVerify certVerify, bool checkServerCert, Int32 timeout)
         {
             m_log.InfoFormat("[MONEY NSL XMLRPC]: XmlRpcResponse certSend: connect to {0}", url);
