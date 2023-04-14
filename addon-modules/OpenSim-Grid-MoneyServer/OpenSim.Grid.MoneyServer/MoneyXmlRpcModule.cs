@@ -1,28 +1,18 @@
 /*
- * Copyright (c) Contributors, http://opensimulator.org/, http://www.nsl.tuis.ac.jp/
- * See CONTRIBUTORS.TXT for a full list of copyright holders.
+ * Copyright (c) Contributors, http://opensimulator.org/, http://www.nsl.tuis.ac.jp/ See CONTRIBUTORS.TXT for a full list of copyright holders.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *   * Neither the name of the OpenSim Project nor the
- *     names of its contributors may be used to endorse or promote products
- *     derived from this software without specific prior written permission.
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+ *     * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the OpenSim Project nor the names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE DEVELOPERS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE DEVELOPERS ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 using System;
@@ -34,11 +24,9 @@ using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-
 using log4net;
 using Nini.Config;
 using Nwc.XmlRpc;
-
 using OpenMetaverse;
 using OpenSim.Framework;
 using OpenSim.Framework.Servers;
@@ -46,10 +34,8 @@ using OpenSim.Framework.Servers.HttpServer;
 using OpenSim.Data.MySQL.MySQLMoneyDataWrapper;
 using OpenSim.Modules.Currency;
 using OpenSim.Region.Framework.Scenes;
-
 using NSL.Network.XmlRpc;
 using NSL.Certificate.Tools;
-
 
 namespace OpenSim.Grid.MoneyServer
 {
@@ -58,7 +44,7 @@ namespace OpenSim.Grid.MoneyServer
         private static readonly ILog m_log  = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private int    m_defaultBalance     = 1000;
-        //
+
         private bool   m_forceTransfer      = false;
         private string m_bankerAvatar       = "";
 
@@ -135,7 +121,6 @@ namespace OpenSim.Grid.MoneyServer
             m_server_config = m_moneyCore.GetServerConfig();    // [MoneyServer] Section
             m_cert_config   = m_moneyCore.GetCertConfig();      // [Certificate] Section
 
-            ////////////////////////////////////////////////////////////////////////
             // [MoneyServer] Section
             m_defaultBalance = m_server_config.GetInt("DefaultBalance", m_defaultBalance);
 
@@ -169,7 +154,6 @@ namespace OpenSim.Grid.MoneyServer
             m_BalanceMessageSendMoney    = m_server_config.GetString("BalanceMessageSendMoney",     m_BalanceMessageSendMoney);
             m_BalanceMessageReceiveMoney = m_server_config.GetString("BalanceMessageReceiveMoney",  m_BalanceMessageReceiveMoney);
 
-            ////////////////////////////////////////////////////////////////////////
             // [Certificate] Section
 
             // XML RPC to Region Server (Client Mode)
@@ -206,11 +190,9 @@ namespace OpenSim.Grid.MoneyServer
             RegisterHandlers();
         }
 
-
         public void PostInitialise()
         {   
         }
-
 
         public void RegisterHandlers()
         {
@@ -244,13 +226,11 @@ namespace OpenSim.Grid.MoneyServer
             m_httpServer.AddXmlRPCHandler("buyCurrency",          buy_func);
         }
 
-
         private XmlRpcResponse buy_func(XmlRpcRequest request, IPEndPoint client)
         {
             m_log.InfoFormat("[MONEY XMLRPC]: handleClient buyCurrency.");
             throw new NotImplementedException();            
         }
-
 
         private XmlRpcResponse quote_func(XmlRpcRequest request, IPEndPoint client)
         {
@@ -258,20 +238,17 @@ namespace OpenSim.Grid.MoneyServer
             throw new NotImplementedException();            
         }
 
-
         private XmlRpcResponse landBuy_func(XmlRpcRequest request, IPEndPoint client)
         {
             m_log.InfoFormat("[MONEY XMLRPC]: handleClient buyLandPrep.");
             throw new NotImplementedException();            
         }
 
-
         private XmlRpcResponse preflightBuyLandPrep_func(XmlRpcRequest request, IPEndPoint client)
         {
             m_log.InfoFormat("[MONEY XMLRPC]: handleClient preflightBuyLandPrep.");
             throw new NotImplementedException();            
         }
-
 
         public string GetSSLCommonName(XmlRpcRequest request)
         {
@@ -288,12 +265,10 @@ namespace OpenSim.Grid.MoneyServer
             return m_sslCommonName;
         }
 
-
         public string GetSSLCommonName()
         {
             return m_sslCommonName;
         }
-
 
         /// <summary>
         /// Get the user balance when user entering a parcel.
@@ -479,6 +454,12 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
+        /// <summary>
+        /// handle incoming transaction
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="remoteClient"></param>
+        /// <returns></returns>
         public XmlRpcResponse handleClientLogout(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             GetSSLCommonName(request);
@@ -638,10 +619,7 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
-
-        //
         // added by Fumi.Iseki
-        //
         /// <summary>
         /// handle incoming force transaction. no check senderSessionID and senderSecureSessionID
         /// </summary>
@@ -758,10 +736,7 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
-
-        //
         // added by Fumi.Iseki
-        //
         /// <summary>
         /// handle scripted sending money transaction.
         /// </summary>
@@ -887,10 +862,7 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
-
-        //
         // added by Fumi.Iseki
-        //
         /// <summary>
         /// handle adding money transaction.
         /// </summary>
@@ -988,10 +960,7 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
-
-        //
         // added by Fumi.Iseki
-        //
         /// <summary>
         /// handle pay charge transaction. no check receiver information.
         /// </summary>
@@ -1091,9 +1060,7 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
-        //
         //  added by Fumi.Iseki
-        //
         /// <summary>
         /// Continue transaction with no confirm.
         /// </summary>
@@ -1188,7 +1155,6 @@ namespace OpenSim.Grid.MoneyServer
             return false;
         }
 
-
         /// <summary>
         /// Get the user balance.
         /// </summary>
@@ -1246,7 +1212,6 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
-
         /// <summary>   
         /// Generic XMLRPC client abstraction
         /// </summary>   
@@ -1302,7 +1267,6 @@ namespace OpenSim.Grid.MoneyServer
             return moneyRespData;
         }
 
-
         /// <summary>
         /// Update the client balance.We don't care about the result.
         /// </summary>
@@ -1330,7 +1294,6 @@ namespace OpenSim.Grid.MoneyServer
                 }
             }
         }
-
 
         /// <summary>
         /// RollBack the transaction if user failed to get the object paid
@@ -1362,7 +1325,12 @@ namespace OpenSim.Grid.MoneyServer
             return false;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="remoteClient"></param>
+        /// <returns></returns>
         public XmlRpcResponse handleCancelTransfer(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             GetSSLCommonName(request);
@@ -1407,7 +1375,12 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="remoteClient"></param>
+        /// <returns></returns>
         public XmlRpcResponse handleGetTransaction(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             GetSSLCommonName(request);
@@ -1473,9 +1446,7 @@ namespace OpenSim.Grid.MoneyServer
             return response;
         }
 
-        //
         // In development
-        //
 
         public XmlRpcResponse handleWebLogin(XmlRpcRequest request, IPEndPoint remoteClient)
         {
@@ -1513,7 +1484,6 @@ namespace OpenSim.Grid.MoneyServer
         }
 
 
-        //
         public XmlRpcResponse handleWebLogout(XmlRpcRequest request, IPEndPoint remoteClient)
         {
             GetSSLCommonName(request);
@@ -1586,7 +1556,6 @@ namespace OpenSim.Grid.MoneyServer
                         else {
                             responseData["userName"] = "unknown user";
                         }
-                        //
                         // User not found
                         if (balance==-1) {
                             responseData["errorMessage"] = "User not found";
@@ -1610,7 +1579,6 @@ namespace OpenSim.Grid.MoneyServer
             responseData["errorMessage"] = "Session check failure, please re-login";
             return response;
         }
-
 
         /// <summary>
         /// Get transaction for web pages
@@ -1693,7 +1661,6 @@ namespace OpenSim.Grid.MoneyServer
             responseData["errorMessage"] = "Session check failure, please re-login";
             return response;
         }
-
 
         /// <summary>
         /// Get total number of transactions for web pages.
