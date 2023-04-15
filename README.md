@@ -1,4 +1,4 @@
-![example workflow](https://github.com/github/docs/actions/workflows/OpenSimCurrencyServer-2023/badge.svg)
+![OpenSimCurrencyServer-2023 workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
 
 # OpenSimCurrencyServer-2023
 OpenSim Currency Server for OpenSim 0.9.3.0 Nessie Dev (X64/Unix/DotNet6) or (dotnet-sdk-6.0.310-win-x64)
