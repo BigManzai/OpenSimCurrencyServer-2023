@@ -23,21 +23,21 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
     public class TransactionData
     {
         UUID m_uuid;
-        string m_sender       = string.Empty;
-        string m_receiver     = string.Empty;
+        string m_sender = string.Empty;
+        string m_receiver = string.Empty;
         int m_amount;
         int m_senderBalance;
         int m_receiverBalance;
         int m_type;
         int m_time;
         int m_status;
-        string m_objectID     = UUID.Zero.ToString();
-        string m_objectName   = string.Empty;
+        string m_objectID = UUID.Zero.ToString();
+        string m_objectName = string.Empty;
         string m_regionHandle = string.Empty;
-        string m_regionUUID   = string.Empty;
-        string m_secureCode   = string.Empty;
-        string m_commonName   = string.Empty;
-        string m_description  = string.Empty;
+        string m_regionUUID = string.Empty;
+        string m_secureCode = string.Empty;
+        string m_commonName = string.Empty;
+        string m_description = string.Empty;
 
         /// <summary>Gets or sets the trans UUID.</summary>
         /// <value>The trans UUID.</value>
@@ -170,20 +170,20 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
 
 
     public enum Status
-    { 
-        SUCCESS_STATUS = 0, 
-        PENDING_STATUS = 1, 
-        FAILED_STATUS  = 2,
-        ERROR_STATUS   = 9
+    {
+        SUCCESS_STATUS = 0,
+        PENDING_STATUS = 1,
+        FAILED_STATUS = 2,
+        ERROR_STATUS = 9
     }
 
 
     public enum AvatarType
-    { 
-        LOCAL_AVATAR   = 0, 
-        HG_AVATAR      = 1, 
-        NPC_AVATAR     = 2, 
-        GUEST_AVATAR   = 3,
+    {
+        LOCAL_AVATAR = 0,
+        HG_AVATAR = 1,
+        NPC_AVATAR = 2,
+        GUEST_AVATAR = 3,
         FOREIGN_AVATAR = 8,
         UNKNOWN_AVATAR = 9
     }
@@ -195,8 +195,8 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         string m_simIP = string.Empty;
         string m_avatarName = string.Empty;
         string m_passwordHash = string.Empty;
-        int    m_avatarType  = (int)AvatarType.LOCAL_AVATAR;
-        int    m_avatarClass = (int)AvatarType.LOCAL_AVATAR;
+        int m_avatarType = (int)AvatarType.LOCAL_AVATAR;
+        int m_avatarClass = (int)AvatarType.LOCAL_AVATAR;
         string m_serverURL = string.Empty;
 
         /// <summary>Gets or sets the user identifier.</summary>

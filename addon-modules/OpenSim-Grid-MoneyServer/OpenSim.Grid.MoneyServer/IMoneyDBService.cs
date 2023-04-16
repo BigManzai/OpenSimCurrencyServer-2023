@@ -15,13 +15,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma warning disable S1128 // Unused "using" should be removed
 using System;
-using System.Collections.Generic;
 using System.Text;
+using System.Collections.Generic;
+
 using OpenMetaverse;
+
 using OpenSim.Data.MySQL.MySQLMoneyDataWrapper;
-#pragma warning restore S1128 // Unused "using" should be removed
 
 
 namespace OpenSim.Grid.MoneyServer

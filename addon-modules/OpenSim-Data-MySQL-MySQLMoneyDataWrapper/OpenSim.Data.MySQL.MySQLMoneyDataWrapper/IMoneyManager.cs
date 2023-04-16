@@ -29,13 +29,13 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         /// <param name="transactionID">The transaction identifier.</param>
         /// <param name="senderID">The sender identifier.</param>
         /// <param name="amount">The amount.</param>
-        bool withdrawMoney(UUID transactionID,string senderID, int amount);
+        bool withdrawMoney(UUID transactionID, string senderID, int amount);
 
         /// <summary>Gives the money.</summary>
         /// <param name="transactionID">The transaction identifier.</param>
         /// <param name="receiverID">The receiver identifier.</param>
         /// <param name="amount">The amount.</param>
-        bool giveMoney(UUID transactionID,string receiverID, int amount);
+        bool giveMoney(UUID transactionID, string receiverID, int amount);
 
         /// <summary>Adds the transaction.</summary>
         /// <param name="transaction">The transaction.</param>
@@ -45,7 +45,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         /// <param name="transactionID">The transaction identifier.</param>
         /// <param name="status">The status.</param>
         /// <param name="description">The description.</param>
-        bool updateTransactionStatus(UUID transactionID, int status,string description);
+        bool updateTransactionStatus(UUID transactionID, int status, string description);
 
         /// <summary>Fetches the transaction.</summary>
         /// <param name="transactionID">The transaction identifier.</param>
@@ -57,7 +57,7 @@ namespace OpenSim.Data.MySQL.MySQLMoneyDataWrapper
         /// <param name="endTime">The end time.</param>
         /// <param name="index">The index.</param>
         /// <param name="retNum">The ret number.</param>
-        TransactionData[] FetchTransaction(string userID, int startTime, int endTime, uint index,uint retNum);
+        TransactionData[] FetchTransaction(string userID, int startTime, int endTime, uint index, uint retNum);
 
         /// <summary>Gets the transaction number.</summary>
         /// <param name="userID">The user identifier.</param>

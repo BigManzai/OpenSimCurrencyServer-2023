@@ -18,7 +18,7 @@ using System.Net.Security;
 using NSL.Certificate.Tools;
 
 
-namespace NSL.Network.XmlRpc 
+namespace NSL.Network.XmlRpc
 {
     public class NSLXmlRpcRequest : XmlRpcRequest
     {
@@ -64,8 +64,9 @@ namespace NSL.Network.XmlRpc
             m_log.InfoFormat("[MONEY NSL XMLRPC]: XmlRpcResponse certSend: connect to {0}", url);
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            if (request==null) {
-                throw new XmlRpcException(XmlRpcErrorCodes.TRANSPORT_ERROR, XmlRpcErrorCodes.TRANSPORT_ERROR_MSG +": Could not create request with " + url);
+            if (request == null)
+            {
+                throw new XmlRpcException(XmlRpcErrorCodes.TRANSPORT_ERROR, XmlRpcErrorCodes.TRANSPORT_ERROR_MSG + ": Could not create request with " + url);
             }
 
             X509Certificate2 clientCert = null;
@@ -76,30 +77,35 @@ namespace NSL.Network.XmlRpc
             request.Timeout = timeout;
             request.UserAgent = "NSLXmlRpcRequest";
 
-            if (certVerify != null) {
+            if (certVerify != null)
+            {
                 clientCert = certVerify.GetPrivateCert();
                 if (clientCert != null) request.ClientCertificates.Add(clientCert);  // Own certificate   // 自身の証明書
                 request.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(certVerify.ValidateServerCertificate);
             }
-            else {
+            else
+            {
                 checkServerCert = false;
             }
 
-            if (!checkServerCert) {
+            if (!checkServerCert)
+            {
                 request.Headers.Add("NoVerifyCert", "true");   // Do not verify the certificate of the other party  // 相手の証明書を検証しない
             }
 
             Stream stream = null;
-            try { 
+            try
+            {
                 stream = request.GetRequestStream();
             }
 
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 ex.ToString();
                 m_log.ErrorFormat("[MONEY NSL XMLRPC]: GetRequestStream Error: {0}", ex);
                 stream = null;
             }
-            if (stream==null) return null;
+            if (stream == null) return null;
 
             XmlTextWriter xml = new XmlTextWriter(stream, _encoding);
             _serializer.Serialize(xml, this);
@@ -107,10 +113,12 @@ namespace NSL.Network.XmlRpc
             xml.Close();
 
             HttpWebResponse response = null;
-            try { 
+            try
+            {
                 response = (HttpWebResponse)request.GetResponse();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 m_log.ErrorFormat("[MONEY NSL XMLRPC]: XmlRpcResponse certSend: GetResponse Error: {0}", ex.ToString());
             }
             StreamReader input = new StreamReader(response.GetResponseStream());
