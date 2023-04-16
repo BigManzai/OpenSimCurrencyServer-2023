@@ -15,13 +15,9 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma warning disable S1128 // Unused "using" should be removed
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Net;
 using System.Net.Security;
 using System.Reflection;
 using System.Timers;
@@ -34,14 +30,7 @@ using OpenSim.Framework.Servers;
 using OpenSim.Data;
 using NSL.Certificate.Tools;
 
-using System.Threading;
-using System.Security.Cryptography.X509Certificates;
-using log4net.Appender;
-using log4net.Core;
-using log4net.Repository;
-using OpenMetaverse;
 using Timer = System.Timers.Timer;
-#pragma warning restore S1128 // Unused "using" should be removed
 
 
 /// <summary>
