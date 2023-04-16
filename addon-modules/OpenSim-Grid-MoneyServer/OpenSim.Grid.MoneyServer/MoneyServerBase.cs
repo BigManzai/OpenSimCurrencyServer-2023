@@ -58,18 +58,14 @@ namespace OpenSim.Grid.MoneyServer
         private int DEAD_TIME = 120;
         private int MAX_DB_CONNECTION = 10;
 
-#pragma warning disable S1450 // Private fields only used as local variables in methods should become local variables
         private MoneyXmlRpcModule m_moneyXmlRpcModule;
-#pragma warning restore S1450 // Private fields only used as local variables in methods should become local variables
         private MoneyDBService m_moneyDBService;
 
         private NSLCertificateVerify m_certVerify = new NSLCertificateVerify(); // Client Certificate
 
-#pragma warning disable S2933 // Fields that are only assigned in the constructor should be "readonly"
         private Dictionary<string, string> m_sessionDic = new Dictionary<string, string>();
         private Dictionary<string, string> m_secureSessionDic = new Dictionary<string, string>();
         private Dictionary<string, string> m_webSessionDic = new Dictionary<string, string>();
-#pragma warning restore S2933 // Fields that are only assigned in the constructor should be "readonly"
 
         IConfig m_server_config;
         IConfig m_cert_config;
@@ -255,13 +251,9 @@ namespace OpenSim.Grid.MoneyServer
                 fs.Close();
                 m_pidFile = path;
             }
-#pragma warning disable S2486 // Generic exceptions should not be ignored
-#pragma warning disable CA1031 // Do not catch general exception types
-#pragma warning disable S108 // Nested blocks of code should not be left empty
+
             catch (Exception) { }
-#pragma warning restore S108 // Nested blocks of code should not be left empty
-#pragma warning restore CA1031 // Do not catch general exception types
-#pragma warning restore S2486 // Generic exceptions should not be ignored
+
         }
 
 
@@ -365,9 +357,6 @@ namespace OpenSim.Grid.MoneyServer
             {
                 m_config = new IniConfigSource(configPath);
             }
-#pragma warning disable S108 // Nested blocks of code should not be left empty
-            else { }
-#pragma warning restore S108 // Nested blocks of code should not be left empty
         }
 
 
