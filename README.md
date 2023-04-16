@@ -1,7 +1,7 @@
 <img src="https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true" alt="Project Badge" width="150">
 
 # OpenSimCurrencyServer-2023
-OpenSim Currency Server for OpenSim 0.9.3.0 Nessie Dev (X64/Unix/DotNet6) or (dotnet-sdk-6.0.310-win-x64)
+OpenSim Currency Server for OpenSim 0.9.3.0 Nessie Dev (X64/Unix/DotNet6) or (dotnet-sdk-6.0.310-win-x64) 
 
 opensim.currency - Revision 911 modified
 
